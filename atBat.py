@@ -1,7 +1,6 @@
 import json
-
 class atBat:
-    def __init__(self,pitches):
+    def __init__(self,pitches,inning):
             self.pitches = pitches
     def toJSON(self):
         data = {}
