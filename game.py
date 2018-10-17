@@ -2,7 +2,7 @@ import json
 
 class game:
     def __init__(self,id,winningTeam,loosingTeam,homeTeam,atBats,JSON):
-        if JSON != none:
+        if JSON != None:
             jData = json.load(JSON)
             self.id = jData['id']
             self.winningTeam= jData['winningTeam']
