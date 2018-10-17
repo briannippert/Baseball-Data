@@ -114,3 +114,17 @@ Code"
      L,Multiple issues
      P,Home plate collision
      X,Other
+
+
+********************************************************************************************
+Position ordes
+
+1 - pitcher
+2 - Catcher
+3 - First base
+4 - Second Base
+5 - Third Base
+6 - short stop 
+7 - Left Field
+8 - Center Field
+9 - Right Field
