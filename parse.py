@@ -1,5 +1,7 @@
 games = {}
 import os
+from pitch import pitch
+from atBat import atBat
 
 strikePlays = ['C','K','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
@@ -102,7 +104,7 @@ def parseAtBat(play,prevAtBat):
         elif(p in ballPlays):
             balls+=1
         elif(p not in activePlay): continue
-        newPitch = pitch(ball, strike, out, scoreDiff, p, first, second, third, JSON=None)
+        newPitch = pitch(balls, strikes, outs, scoreDiff, p, first, second, third, None)
         pitches.append(newPitch)
     retVals = parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom)
     first = retVals["first"]
