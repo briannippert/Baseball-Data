@@ -4,8 +4,7 @@ import os
 strikePlays = ['C','K','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
 
-def advanceRunners(batter,firstBase,secondBase,thirdBase, count)
-{
+def advanceRunners(batter,firstBase,secondBase,thirdBase, count):
     runsScored = 0
     curCount = 0
     while count <= curCount:
@@ -23,7 +22,6 @@ def advanceRunners(batter,firstBase,secondBase,thirdBase, count)
             firstBase = true
         curCount += 1
     return rundiff
-}
 
 def parsePlay(play,prevPlay):
     pitchPlay = play[4]
