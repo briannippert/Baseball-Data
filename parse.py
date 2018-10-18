@@ -1,4 +1,5 @@
 games = {}
+import os
 
 strikePlays = ['C','K','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
@@ -37,8 +38,9 @@ def readFile(f):
                 if (len(game)>0):
                     prevPlay = game[-1]
                 parsePlay(lineDetailed[1:], prevPlay)
-
-filePath = './2017eve/2017BOS.EVA'
+#os.path.join('app', 'subdir', 'dir', 'filename.foo')
+filePath = os.path.join('.',"2017eve","2017BOS.EVA")
+#filePath = './2017eve/2017BOS.EVA'
 readFile(filePath)
 
 
