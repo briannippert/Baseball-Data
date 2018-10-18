@@ -23,6 +23,20 @@ def advanceRunners(batter,firstBase,secondBase,thirdBase, count):
         curCount += 1
     return rundiff
 
+def parseFieldPlay(fieldPlay):
+    slashPos = fieldPlay.find('/')
+    periodPos = fieldPlay.find('.')
+    batterPlay = fieldPlay
+    runnerPlay = None
+    if(slashPos > -1):
+        # print(fieldPlay)
+        batterPlay=batterPlay[:slashPos]
+    if(periodPos > -1):
+        runnerPlay = fieldPlay[periodPos+1:]
+    # print(batterPlay)
+    if(runnerPlay):
+        print(runnerPlay)
+
 def parsePlay(play,prevPlay):
     pitchPlay = play[4]
     fieldPlay = play[5]
@@ -32,9 +46,9 @@ def parsePlay(play,prevPlay):
     
     outs = 0
     scoreDiff = 0
-    first = 0
-    second = 0 
-    third = 0
+    first = False
+    second = False 
+    third = False
     if(prevPlay != None):
         prevPlay = prevPlay.getCurrentState()
         outs = prevPlay.outs
@@ -44,9 +58,9 @@ def parsePlay(play,prevPlay):
         third = prevPlay.third
     if(outs == 3):
         outs = 0
-        first = 0
-        second = 0
-        third = 0
+        first = False
+        second = False
+        third = False
 
     for p in pitchPlay:
         if(p in strikePlays):
@@ -57,7 +71,10 @@ def parsePlay(play,prevPlay):
             balls+=1
             if(balls == 4):
                 pass#advance runners
-    print('Strikes: {} Balls: {} Outs: {} Pitches: {}'.format(strikes,balls,outs,pitchPlay))
+    # if('.' in fieldPlay):
+    #     print(pitchPlay,'           ',fieldPlay)
+    parseFieldPlay(fieldPlay)
+    # print('Strikes: {} Balls: {} Outs: {} Pitches: {}'.format(strikes,balls,outs,pitchPlay))
     
 def readFile(f):
     with open(f) as fp:
