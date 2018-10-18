@@ -15,17 +15,13 @@ def advanceRunners(batter,firstBase,secondBase,thirdBase, count):
             secondBase = false
             thirdBase = true
         if firstBase == true:
-            firstBase == false:
+            firstBase = false
             secondBase = true
         if batter == true:
             batter = false
             firstBase = true
         curCount += 1
     return rundiff
-<<<<<<< HEAD
-=======
-
->>>>>>> 7b9a2ea1c461549c75e22a63c1743ead4e51202b
 
 def parsePlay(play,prevPlay):
     pitchPlay = play[4]
