@@ -19,3 +19,6 @@ class game:
         data['atBats'] = self.atBats
         json_data = json.dumps(data)
         return json_data
+
+
+    

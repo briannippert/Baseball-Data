@@ -34,3 +34,8 @@ class pitch:
         data['third'] = self.third
         json_data = json.dumps(data)
         return json_data
+
+
+
+test = pitch(3,2,2,-1,"K",True,False,True,None)
+print(test.toJSON())

@@ -13,7 +13,25 @@ class atBat:
     def toJSON(self):
         data = {}
         data['pitches'] = self.pitches
+        data['inning'] = self.inning
+        data['fisrt'] = self.first
+        data['second'] = self.second
+        data['third'] = self.third
+        data['outs'] = self.outs
+        data['rundiff'] = self.rundiff
         json_data = json.dumps(data)
         return json_data
     def getCurrentState(self):
         return pitches[-1]
+
+pitches = []
+p = pitch.pitch(0,0,0,0,"S",False,False,False,None)
+pitches.append(p)
+p = pitch.pitch(0,1,0,0,"S",True,False,True,None)
+pitches.append(p)
+p = pitch.pitch(0,2,0,0,"K",True,False,True,None)
+pitches.append(p)
+
+
+test = atBat(pitches,"T5",True,True,False,1,0,"K")
+print(test.toJSON())
