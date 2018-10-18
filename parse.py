@@ -1,6 +1,6 @@
 games = {}
 
-with open('.\\2017eve\\2017BOS.EVA') as fp:
+with open('./2017eve/2017BOS.EVA') as fp:
     gameId = None
     game = None
     for line in fp:
