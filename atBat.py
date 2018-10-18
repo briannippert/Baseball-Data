@@ -9,3 +9,5 @@ class atBat:
         data['pitches'] = self.pitches
         json_data = json.dumps(data)
         return json_data
+    def getCurrentState(self):
+        return pitches[-1]
