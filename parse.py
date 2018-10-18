@@ -29,7 +29,25 @@ def parsePlay(play,prevPlay):
 
     strikes = 0
     balls = 0
+    
     outs = 0
+    scoreDiff = 0
+    first = 0
+    second = 0 
+    third = 0
+    if(prevPlay != None):
+        prevPlay = prevPlay.getCurrentState()
+        outs = prevPlay.outs
+        scoreDiff = prevPlay.scoreDiff
+        first = prevPlay.first
+        second = prevPlay.second
+        third = prevPlay.third
+    if(outs == 3):
+        outs = 0
+        first = 0
+        second = 0
+        third = 0
+
     for p in pitchPlay:
         if(p in strikePlays):
             strikes +=1
@@ -56,10 +74,9 @@ def readFile(f):
                 prevPlay = None
                 if (len(game)>0):
                     prevPlay = game[-1]
-                parsePlay(lineDetailed[1:], prevPlay)
+                atBat = parsePlay(lineDetailed[1:], None)
+                game.append(atBat)
 #os.path.join('app', 'subdir', 'dir', 'filename.foo')
 filePath = os.path.join('.',"2017eve","2017BOS.EVA")
-#filePath = './2017eve/2017BOS.EVA'
 readFile(filePath)
-
 
