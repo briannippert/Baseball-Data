@@ -34,5 +34,5 @@ with open('./2017eve/2017BOS.EVA') as fp:
                 games[gameId] = game
         if(lineDetailed[0]=='play'):
             if(lineDetailed[6]=='NP' and lineDetailed[5] == ''): continue #ignore non-injury subs
-            parsePlay(lineDetailed[1:])
+            parsePlay(lineDetailed[1:], None)
 
