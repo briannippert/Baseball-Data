@@ -2,7 +2,7 @@ import json
 import pitch
 
 class atBat:
-    def __init__(self,pitches,inning, first,second,third,outs,scoreDiff, outcome):
+    def __init__(self,pitches,inning, first,second,third,outs,scoreDiff):
         self.pitches = pitches
         self.inning = inning
         self.first = first
@@ -11,34 +11,24 @@ class atBat:
         self.outs = outs
         self.scoreDiff = scoreDiff
     
-    def toJSON(self):
+    def toDict(self):
         data = {}
         Jpitches =[]
         for pitch in self.pitches:
-            Jpitches.append(pitch.toJSON())
-        data['pitches'] = Jpitches
-        data['inning'] = self.inning
-        data['first'] = self.first
-        data['second'] = self.second
-        data['third'] = self.third
-        data['outs'] = self.outs
-        data['scoreDiff'] = self.scoreDiff
-        json_data = json.dumps(data)
-        return json_data
+            Jpitches.append(pitch.toDict())
+        data["pitches"] = Jpitches
+        data["inning"] = self.inning
+        data["first"] = self.first
+        data["second"] = self.second
+        data["third"] = self.third
+        data["outs"] = self.outs
+        data["scoreDiff"] = self.scoreDiff
+        #json_data = json.dumps(data)
+        return data
    
     def getCurrentState(self):
-        return pitches[-1]
+        if (len(self.pitches)==0):
+            return []
+        else:
+            return self.pitches[-1]
 
-pitches = []
-p = pitch.pitch(0,0,0,0,"S",False,False,False,None)
-pitches.append(p)
-p = pitch.pitch(0,1,0,0,"S",True,False,True,None)
-pitches.append(p)
-p = pitch.pitch(0,2,0,0,"K",True,False,True,None)
-pitches.append(p)
-
-
-test = atBat(pitches,"T5",True,True,False,1,0,"K")
-testJson = test.toJSON()
-undoJson = json.loads(testJson)
-print(undoJson[1]["pitches"])

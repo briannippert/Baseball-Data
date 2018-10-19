@@ -1,7 +1,8 @@
-games = {}
+games = []
 import os
 from pitch import pitch
 from atBat import atBat
+from game import game
 
 strikePlays = ['C','K','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
@@ -86,12 +87,16 @@ def parseAtBat(play,prevAtBat):
         second = prevAtBat.second
         third = prevAtBat.third
         if('.' in pitchPlay):
-            prevCount = prevAtBat.getCurrentState()
-            strikes = prevCount.strikes
-            balls = prevCount.balls
-            pitches = prevCount.pitches
-            while('.' in pitchPlay):
-                pitchPlay = pitchPlay[pitchPlay.find('.')+1:]
+            try:
+                prevCount = prevAtBat.getCurrentState()
+                strikes = prevCount.strike
+                balls = prevCount.ball
+                pitches = prevAtBat.pitches
+                while('.' in pitchPlay):
+                    pitchPlay = pitchPlay[pitchPlay.find('.')+1:]
+            except:
+                print(play)
+           
     if(outs == 3):
         outs = 0
         first = False
@@ -114,28 +119,50 @@ def parseAtBat(play,prevAtBat):
     third = retVals["third"]
     scoreDiff = retVals["scoreDiff"]
     outs = retVals["outs"]
-    print('Strikes: {} Balls: {} Outs: {} ScoreDiff: {} Pitches: {}'.format(strikes,balls,outs,scoreDiff,pitchPlay))
-    retBat = atBat()
-    
+    # print('Strikes: {} Balls: {} Outs: {} ScoreDiff: {} Pitches: {}'.format(strikes,balls,outs,scoreDiff,pitchPlay))
+    inning = isBottom + inning
+    retBat = atBat(pitches,inning, first,second,third,outs,scoreDiff)
+    return retBat
+
+def createGame(gameId,atBats): 
+    lastBat = atBats[-1]
+    finalScore = lastBat.scoreDiff
+    winner = finalScore >= 0
+    newGame = game(gameId,winner,atBats,None)  
+    games.append(newGame)
+
 def readFile(f):
     with open(f) as fp:
         gameId = None
         game = []
+        prevBatter = None
+        
         for line in fp:
             lineDetailed = line.strip().split(',')
             if(lineDetailed[0]=='id'):
                 if(gameId != None):
-                    games[gameId] = game
+                    # games[gameId] = game
+                    createGame(gameId,game)
+                    game = []
+
+                gameId = lineDetailed[1]
             if(lineDetailed[0]=='play'):
                 if(lineDetailed[6]=='NP' and lineDetailed[5] == ''): continue #ignore non-injury subs
                 prevAtBat = None
                 if (len(game)>0):
                     prevAtBat = game[-1]
-                if(lineDetailed[5].find('.') != -1):
+                if(lineDetailed[5].find('.') != -1 and prevBatter == lineDetailed[3]):
                     game.pop()
                 atBat = parseAtBat(lineDetailed[1:], prevAtBat)
+                prevBatter = lineDetailed[3]
                 game.append(atBat)
+        #add final game to list
+        createGame(gameId,game)
+    
 
 filePath = os.path.join('.',"2017eve","2017BOS.EVA")
 readFile(filePath)
+print(len(games))
+for g in games:
+    print(g.toJSON())
 
