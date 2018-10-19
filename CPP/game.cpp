@@ -7,11 +7,12 @@ class Game
     public: 
   
     // Data Members 
-    string geekname; 
+    string gameID;
+    bool winner;
+     
   
     // Member Functions() 
-    void printname() 
+    void printGame() 
     { 
-       cout << "Geekname is: " << geekname; 
-    } 
-}; 
+       cout << 
+    }

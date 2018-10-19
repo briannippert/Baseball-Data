@@ -13,7 +13,7 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
     periodPos = fieldPlay.find('.')
     batterPlay = fieldPlay
     runnerPlay = None
-    batterOut = False
+    ignoreBatter = False
 
     if(slashPos > -1):
         batterPlay=batterPlay[:slashPos]
@@ -27,14 +27,14 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
         for p in runPlays:
             if(p[1]=='X'):
                 #players out
-                if(p[0]==1):
+                if(p[0]=='1'):
                     first=False
-                elif(p[0]==2):
+                elif(p[0]=='2'):
                     second=False
-                elif(p[0]==3):
+                elif(p[0]=='3'):
                     third=False
                 elif(p[0]=='B'):
-                    batterOut = True
+                    ignoreBatter = True
                 outs+=1
             else:#if(p[1]=='-')
                 start = p[0]
@@ -43,25 +43,76 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
                 ends.append(end)
 
         for start in starts:
-            if(start == 1):
+            if(start == '1'):
                 first=False
-            elif(start==2):
+            elif(start=='2'):
                 second=False
-            elif(start==3):
+            elif(start=='3'):
                 third=False 
+            elif(start=='B'):
+                ignoreBatter=True
+
         for end in ends:
-            if(end == 1):
+            if(end == '1'):
                 first=True
-            elif(end==2):
+            elif(end=='2'):
                 second=True
-            elif(end==3):
+            elif(end=='3'):
                 third=True
             else:#HOME
                 if(isBottom == '1'):
                     scoreDiff += 1
                 else:
                     scoreDiff -= 1  
+        
+        csPos = batterPlay.find('CS')
+        if(csPos != -1 and batterPlay[csPos + 5] != 'E'):
+            outs+=1
+            runner = batterPlay[csPos+2]
+            if(runner == '2'):
+                first = False
+            elif(runner == '3'):
+                second = False
+            elif(runner == 'H'):
+                third = False
 
+        if(ignoreBatter == False):
+            if(batterPlay[0]=='S' or batterPlay[0:2]=='HP' or batterPlay[0]=='C'):
+                first = True
+            elif(batterPlay[0]=='D'):
+                second = True
+            elif(batterPlay[0]=='T'):
+                third = True
+            elif(batterPlay[0]=='H'):
+                if(isBottom == '1'):
+                    scoreDiff += 1
+                else:
+                    scoreDiff -= 1  
+            elif(batterPlay[0]=='E'):
+                first=True
+
+        if(batterPlay[0].isdigit()):
+            singleOut = True
+            if(batterPlay.find('(')!=-1):
+                outs+=1
+                while(batterPlay.find('(')!=-1):
+                    singleOut = False
+                    parenPos = batterPlay.find('(')
+                    runnerOut = batterPlay[parenPos+1]
+                    if(runnerOut == '1'):
+                        first=False
+                    elif(runnerOut=='2'):
+                        second=False
+                    elif(runnerOut=='3'):
+                        third=False 
+                    elif(runnerOut=='B'):
+                        outs-=1
+                    batterPlay=batterPlay[parenPos+3:]
+                    outs+=1
+            if(singleOut):
+                outs+=1
+            if(ignoreBatter):
+                outs-=1
     return {'first':first,'second':second,'third':third,'scoreDiff':scoreDiff,'outs':outs}               
 
 def parseAtBat(play,prevAtBat):
@@ -97,7 +148,7 @@ def parseAtBat(play,prevAtBat):
             except:
                 print(play)
            
-    if(outs == 3):
+    if(outs >= 3):
         outs = 0
         first = False
         second = False
@@ -146,7 +197,7 @@ def readFile(f):
                     game = []
 
                 gameId = lineDetailed[1]
-            if(lineDetailed[0]=='play'):
+            if(lineDetailed[0]=='play' ):
                 if(lineDetailed[6]=='NP' and lineDetailed[5] == ''): continue #ignore non-injury subs
                 prevAtBat = None
                 if (len(game)>0):
@@ -160,7 +211,7 @@ def readFile(f):
         createGame(gameId,game)
     
 
-filePath = os.path.join('.',"2017eve","2017BOS.EVA")
+filePath = os.path.join('.',"2017eve","TEST.EVA")
 readFile(filePath)
 print(len(games))
 output =""
