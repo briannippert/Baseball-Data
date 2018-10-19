@@ -10,9 +10,13 @@ class atBat:
         self.third = third
         self.outs = outs
         self.rundiff = rundiff
+    
     def toJSON(self):
         data = {}
-        data['pitches'] = self.pitches
+        Jpitches =" "
+        for pitch in self.pitches:
+            Jpitches += pitch.toJSON()
+        data['pitches'] = Jpitches
         data['inning'] = self.inning
         data['fisrt'] = self.first
         data['second'] = self.second
@@ -21,6 +25,7 @@ class atBat:
         data['rundiff'] = self.rundiff
         json_data = json.dumps(data)
         return json_data
+   
     def getCurrentState(self):
         return pitches[-1]
 
