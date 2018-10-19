@@ -13,12 +13,12 @@ class atBat:
     
     def toJSON(self):
         data = {}
-        Jpitches =" "
+        Jpitches =[]
         for pitch in self.pitches:
-            Jpitches += pitch.toJSON()
+            Jpitches.append(pitch.toJSON())
         data['pitches'] = Jpitches
         data['inning'] = self.inning
-        data['fisrt'] = self.first
+        data['first'] = self.first
         data['second'] = self.second
         data['third'] = self.third
         data['outs'] = self.outs
@@ -39,4 +39,6 @@ pitches.append(p)
 
 
 test = atBat(pitches,"T5",True,True,False,1,0,"K")
-print(test.toJSON())
+testJson = test.toJSON()
+undoJson = json.loads(testJson)
+print(undoJson[1]["pitches"])
