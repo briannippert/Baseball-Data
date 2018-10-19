@@ -163,6 +163,9 @@ def readFile(f):
 filePath = os.path.join('.',"2017eve","2017BOS.EVA")
 readFile(filePath)
 print(len(games))
+output =""
 for g in games:
-    print(g.toJSON())
+    output+= g.toJSON()
+with(open('results.txt','w')) as wf:
+    wf.write(output)
 
