@@ -56,7 +56,7 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
             elif(end==3):
                 third=True
             else:#HOME
-                if(isBottom == 1):
+                if(isBottom == '1'):
                     scoreDiff += 1
                 else:
                     scoreDiff -= 1  
@@ -80,16 +80,18 @@ def parseAtBat(play,prevAtBat):
 
    
     if(prevAtBat != None):
-        prevState = prevAtBat.getCurrentState()
-        outs = prevState.outs
-        scoreDiff = prevState.scoreDiff
-        first = prevState.first
-        second = prevState.second
-        third = prevState.third
+        outs = prevAtBat.outs
+        scoreDiff = prevAtBat.scoreDiff
+        first = prevAtBat.first
+        second = prevAtBat.second
+        third = prevAtBat.third
         if('.' in pitchPlay):
-            strikes = prevState.strikes
-            balls = prevState.balls
-            pitches = prevAtBat.pitches
+            prevCount = prevAtBat.getCurrentState()
+            strikes = prevCount.strikes
+            balls = prevCount.balls
+            pitches = prevCount.pitches
+            while('.' in pitchPlay):
+                pitchPlay = pitchPlay[pitchPlay.find('.')+1:]
     if(outs == 3):
         outs = 0
         first = False
@@ -113,7 +115,7 @@ def parseAtBat(play,prevAtBat):
     scoreDiff = retVals["scoreDiff"]
     outs = retVals["outs"]
     print('Strikes: {} Balls: {} Outs: {} ScoreDiff: {} Pitches: {}'.format(strikes,balls,outs,scoreDiff,pitchPlay))
-    # retBat = atBat()
+    retBat = atBat()
     
 def readFile(f):
     with open(f) as fp:
