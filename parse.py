@@ -115,7 +115,7 @@ def parseAtBat(play,prevAtBat):
     scoreDiff = retVals["scoreDiff"]
     outs = retVals["outs"]
     print('Strikes: {} Balls: {} Outs: {} ScoreDiff: {} Pitches: {}'.format(strikes,balls,outs,scoreDiff,pitchPlay))
-    # retBat = atBat()
+    retBat = atBat()
     
 def readFile(f):
     with open(f) as fp:
