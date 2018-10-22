@@ -13,9 +13,9 @@ int main()
 {
     string name;
     cout << "Enter File Name: ";
-  //  cin >> name;
-    string data = "hello";//readFile(name);
-    // cout << data;
+    cin >> name;
+    string data = readFile(name);
+     cout << data;
     parseJSON(data);
     return 0;
 }
@@ -42,7 +42,5 @@ string readFile(string path)
 
 void parseJSON(string data)
 {
-    //   cout << data << "\n";
-   string jsonTest = "{ \"name\":\"John\", \"age\":30, \"car\":null }";
-    cout << json::parse(jsonTest);
+    json jObject =  json::parse(data);
 }
