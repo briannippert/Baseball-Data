@@ -245,18 +245,26 @@ def testGame(f):
             testFile.write('Game ID: ' + gameId + '\n')
             for ab in game:
                 testFile.write(str(ab) + '\n')
+
+def writeResults(gameId):
+    output = []
+    for g in games:
+        gameDict = g.toDict()
+        if(gameId is None or gameDict["id"]==gameId):
+            output.append(gameDict)
+    jsonOut = json.dumps(output)
+    with(open('results.txt','w')) as wf:
+        wf.write(jsonOut)
+    
+
+
+
 if __name__ == "__main__":
     testFile = getFilePath('TEST.EVA')
     readFile(getFilePath('2017BOS.EVA'))
     print(len(games))
-    # output =""
-    # for g in games:
-    #     output+= g.toJSON()
-    output = []
-    for g in games:
-        output.append(g.toDict())
-    jsonOut = json.dumps(output)
-    with(open('results.txt','w')) as wf:
-        wf.write(jsonOut)
+    # testGame = None
+    testGameId = 'BOS201707180'
+    writeResults(testGameId)
     testGame(testFile)
     
