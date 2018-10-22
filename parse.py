@@ -260,11 +260,11 @@ def writeResults(gameId):
 
 
 if __name__ == "__main__":
-    testFile = getFilePath('TEST.EVA')
-    readFile(getFilePath('2017BOS.EVA'))
+    testFile = getFilePath('TESTBOS201707180.EVA')
+    # readFile(getFilePath('2017BOS.EVA'))
     print(len(games))
-    # testGame = None
-    testGameId = 'BOS201707180'
+    testGameId = None
+    # testGameId = 'BOS201707180'
     writeResults(testGameId)
     testGame(testFile)
     
