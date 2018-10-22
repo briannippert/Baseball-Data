@@ -7,7 +7,7 @@ from game import game
 strikePlays = ['C','K','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
 activePlay = ['H','X','Y']
-fouls = ['F','L','R']
+foulPlays = ['F','L','R']
 
 def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
     slashPos = fieldPlay.find('/')
@@ -176,7 +176,7 @@ def parseAtBat(play,prevAtBat):
     outs = retVals["outs"]
     # print('Strikes: {} Balls: {} Outs: {} ScoreDiff: {} Pitches: {}'.format(strikes,balls,outs,scoreDiff,pitchPlay))
     inning = isBottom + inning
-    retBat = atBat(pitches,inning, first,second,third,outs,scoreDiff)
+    retBat = atBat(pitches,inning,first,second,third,outs,scoreDiff)
     return retBat
 
 def createGame(gameId,atBats): 
@@ -213,14 +213,18 @@ def readFile(f):
                 game.append(atBat)
         #add final game to list
         createGame(gameId,game)
-    
 
-filePath = os.path.join('.',"2017eve","TEST.EVA")
-readFile(filePath)
-print(len(games))
-output =""
-for g in games:
-    output+= g.toJSON()
-with(open('results.txt','w')) as wf:
-    wf.write(output)
+def getFilePath(file):
+    filePath = os.path.join('.',"2017eve",file)
+    return filePath
 
+
+if __name__ == "__main__":
+    readFile(getFilePath('TEST.EVA'))
+    # readFile(getFilePath('2017BOS.EVA'))
+    print(len(games))
+    output =""
+    for g in games:
+        output+= g.toJSON()
+    with(open('results.txt','w')) as wf:
+        wf.write(output)
