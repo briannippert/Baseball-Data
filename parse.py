@@ -7,6 +7,7 @@ from game import game
 strikePlays = ['C','K','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
 activePlay = ['H','X','Y']
+fouls = ['F','L','R']
 
 def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
     slashPos = fieldPlay.find('/')
@@ -161,6 +162,9 @@ def parseAtBat(play,prevAtBat):
                 outs += 1
         elif(p in ballPlays):
             balls+=1
+        elif(p in foulPlays):
+            if(strikes<3):
+                strikes+=1
         elif(p not in activePlay): continue
         newPitch = pitch(balls, strikes, outs, scoreDiff, p, first, second, third, None)
         pitches.append(newPitch)
