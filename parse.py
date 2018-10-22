@@ -241,9 +241,9 @@ def testGame(f):
         #add final game to list
         
         with(open('test.txt','w')) as testFile:
-            testFile.write('Game ID: ' + gameId)
+            testFile.write('Game ID: ' + gameId + '\n')
             for ab in game:
-                print(ab) 
+                testFile.write(str(ab) + '\n')
 if __name__ == "__main__":
     testFile = getFilePath('TEST.EVA')
     readFile(getFilePath('2017BOS.EVA'))
