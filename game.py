@@ -22,6 +22,15 @@ class game:
         data["atBats"] = atBatList
         json_data = json.dumps(data)
         return json_data
+    def toDict(self):
+        data = {}
+        data["id"] = self.id
+        data["winningTeam"] = self.winningTeam
+        atBatList = []
+        for atBat in self.atBats:
+            atBatList.append(atBat.toDict())
+        data["atBats"] = atBatList
+        return data
 
 
 # pitches = []

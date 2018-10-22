@@ -3,6 +3,7 @@ import os
 from pitch import pitch
 from atBat import atBat
 from game import game
+import json
 
 strikePlays = ['C','K','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
@@ -248,10 +249,14 @@ if __name__ == "__main__":
     testFile = getFilePath('TEST.EVA')
     readFile(getFilePath('2017BOS.EVA'))
     print(len(games))
-    output =""
+    # output =""
+    # for g in games:
+    #     output+= g.toJSON()
+    output = []
     for g in games:
-        output+= g.toJSON()
+        output.append(g.toDict())
+    jsonOut = json.dumps(output)
     with(open('results.txt','w')) as wf:
-        wf.write(output)
+        wf.write(jsonOut)
     testGame(testFile)
     
