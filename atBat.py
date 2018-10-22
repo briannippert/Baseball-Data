@@ -11,6 +11,9 @@ class atBat:
         self.outs = outs
         self.scoreDiff = scoreDiff
     
+    def __repr__(self):
+        return 'Inning:{} Score:{} Outs:{} First:{} Second:{} Third:{}'.format(self.inning,self.scoreDiff,self.outs,self.first,self.second,self.third)
+    
     def toDict(self):
         data = {}
         Jpitches =[]

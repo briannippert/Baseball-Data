@@ -199,6 +199,7 @@ def readFile(f):
                     # games[gameId] = game
                     createGame(gameId,game)
                     game = []
+                    prevBatter = None
 
                 gameId = lineDetailed[1]
             if(lineDetailed[0]=='play' ):
@@ -218,13 +219,39 @@ def getFilePath(file):
     filePath = os.path.join('.',"2017eve",file)
     return filePath
 
-
+def testGame(f):
+    with open(f) as fp:
+        gameId = None
+        game = []
+        prevBatter = None
+        for line in fp:
+            lineDetailed = line.strip().split(',')
+            if(lineDetailed[0]=='id'):
+                gameId = lineDetailed[1]
+            if(lineDetailed[0]=='play' ):
+                if(lineDetailed[6]=='NP' and lineDetailed[5] == ''): continue #ignore non-injury subs
+                prevAtBat = None
+                if (len(game)>0):
+                    prevAtBat = game[-1]
+                if(lineDetailed[5].find('.') != -1 and prevBatter == lineDetailed[3]):
+                    game.pop()
+                atBat = parseAtBat(lineDetailed[1:], prevAtBat)
+                prevBatter = lineDetailed[3]
+                game.append(atBat)
+        #add final game to list
+        
+        with(open('test.txt','w')) as testFile:
+            testFile.write('Game ID: ' + gameId)
+            for ab in game:
+                print(ab) 
 if __name__ == "__main__":
-    readFile(getFilePath('TEST.EVA'))
-    # readFile(getFilePath('2017BOS.EVA'))
+    testFile = getFilePath('TEST.EVA')
+    readFile(getFilePath('2017BOS.EVA'))
     print(len(games))
     output =""
     for g in games:
         output+= g.toJSON()
     with(open('results.txt','w')) as wf:
         wf.write(output)
+    testGame(testFile)
+    
