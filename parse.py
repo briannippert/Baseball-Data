@@ -66,55 +66,58 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
                     scoreDiff += 1
                 else:
                     scoreDiff -= 1  
-        
-        csPos = batterPlay.find('CS')
-        if(csPos != -1 and batterPlay[csPos + 5] != 'E'):
+    
+    csPos = batterPlay.find('CS')
+    if(csPos != -1 and batterPlay[csPos + 5] != 'E'):
+        outs+=1
+        runner = batterPlay[csPos+2]
+        if(runner == '2'):
+            first = False
+        elif(runner == '3'):
+            second = False
+        elif(runner == 'H'):
+            third = False
+
+    if(ignoreBatter == False):
+        if(batterPlay[0]=='S' 
+            or batterPlay[0:2]=='HP' 
+            or batterPlay[0]=='C' 
+            or batterPlay[0]=='E'
+            or batterPlay[0]=='W'):
+            first = True
+        elif(batterPlay[0]=='D'):
+            second = True
+        elif(batterPlay[0]=='T'):
+            third = True
+        elif(batterPlay[0]=='H'):
+            if(isBottom == '1'):
+                scoreDiff += 1
+            else:
+                scoreDiff -= 1  
+                
+    if(batterPlay[0].isdigit()):
+        # print(fieldPlay,batterPlay)
+        singleOut = True
+        if(batterPlay.find('(')!=-1):
             outs+=1
-            runner = batterPlay[csPos+2]
-            if(runner == '2'):
-                first = False
-            elif(runner == '3'):
-                second = False
-            elif(runner == 'H'):
-                third = False
-
-        if(ignoreBatter == False):
-            if(batterPlay[0]=='S' or batterPlay[0:2]=='HP' or batterPlay[0]=='C'):
-                first = True
-            elif(batterPlay[0]=='D'):
-                second = True
-            elif(batterPlay[0]=='T'):
-                third = True
-            elif(batterPlay[0]=='H'):
-                if(isBottom == '1'):
-                    scoreDiff += 1
-                else:
-                    scoreDiff -= 1  
-            elif(batterPlay[0]=='E'):
-                first=True
-
-        if(batterPlay[0].isdigit()):
-            singleOut = True
-            if(batterPlay.find('(')!=-1):
+            while(batterPlay.find('(')!=-1):
+                singleOut = False
+                parenPos = batterPlay.find('(')
+                runnerOut = batterPlay[parenPos+1]
+                if(runnerOut == '1'):
+                    first=False
+                elif(runnerOut=='2'):
+                    second=False
+                elif(runnerOut=='3'):
+                    third=False 
+                elif(runnerOut=='B'):
+                    outs-=1
+                batterPlay=batterPlay[parenPos+3:]
                 outs+=1
-                while(batterPlay.find('(')!=-1):
-                    singleOut = False
-                    parenPos = batterPlay.find('(')
-                    runnerOut = batterPlay[parenPos+1]
-                    if(runnerOut == '1'):
-                        first=False
-                    elif(runnerOut=='2'):
-                        second=False
-                    elif(runnerOut=='3'):
-                        third=False 
-                    elif(runnerOut=='B'):
-                        outs-=1
-                    batterPlay=batterPlay[parenPos+3:]
-                    outs+=1
-            if(singleOut):
-                outs+=1
-            if(ignoreBatter):
-                outs-=1
+        if(singleOut):
+            outs+=1
+        if(ignoreBatter):
+            outs-=1
     return {'first':first,'second':second,'third':third,'scoreDiff':scoreDiff,'outs':outs}               
 
 def parseAtBat(play,prevAtBat):
@@ -122,6 +125,7 @@ def parseAtBat(play,prevAtBat):
     isBottom = play[1] #top = 0, bottom = 1
     pitchPlay = play[4]
     fieldPlay = play[5]
+    # print("Play",play,"Pitchplay",pitchPlay,"fieldplay",fieldPlay)
     pitches = []
     strikes = 0
     balls = 0
@@ -261,7 +265,7 @@ def writeResults(gameId):
 
 if __name__ == "__main__":
     testFile = getFilePath('TESTBOS201707180.EVA')
-    # readFile(getFilePath('2017BOS.EVA'))
+    readFile(getFilePath('2017BOS.EVA'))
     print(len(games))
     testGameId = None
     # testGameId = 'BOS201707180'
