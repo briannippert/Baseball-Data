@@ -1,14 +1,16 @@
 from parse import *
 
-testlines = """play,4,1,ramih003,32,CFBBBX,6/P
-play,4,1,younc004,22,CFBFBX,HR/78/L
-play,4,1,bradj001,01,FX,5/P5F
-play,4,1,leons001,12,CBFFX,S7/G
-play,4,1,marrd001,12,FFFBX,8/L"""
+testlines = """
+play,6,0,beneb001,??,,CS2(2E4).1-3
+play,7,0,backw001,11,FBX,64(1)3/GDP/G6
+play,7,0,leonj001,01,CX,8(B)84(2)/LDP/L8
+play,7,1,tempg001,00,X,54(B)/BG25/SH.1-2
+play,7,1,randw001,00,.>X,1(B)16(2)63(1)/LTP/L1
+play,1,0,bayld001,??,,CS2(24).2-3
+play,6,0,beneb001,??,,CS2(2E4).1-3
+play,9,0,bencj101,??,,DI.1-2"""
 testlines = testlines.split()
 for line in testlines:
     detailedLine = line.split(',')
     ret = parseAtBat(detailedLine[1:],None)
-    print(ret)
-
-# print(parseAtBat(testlines[0][1:],None))
+    print(line, '\n',ret,'\n')

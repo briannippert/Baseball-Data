@@ -96,12 +96,8 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
                 scoreDiff -= 1  
                 
     if(batterPlay[0].isdigit()):
-        # print(fieldPlay,batterPlay)
-        singleOut = True
         if(batterPlay.find('(')!=-1):
-            outs+=1
             while(batterPlay.find('(')!=-1):
-                singleOut = False
                 parenPos = batterPlay.find('(')
                 runnerOut = batterPlay[parenPos+1]
                 if(runnerOut == '1'):
@@ -114,10 +110,11 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
                     outs-=1
                 batterPlay=batterPlay[parenPos+3:]
                 outs+=1
-        if(singleOut):
-            outs+=1
+        outs+=1
         if(ignoreBatter):
             outs-=1
+        if(fieldPlay.find('FO') != -1):
+            outs -=1
     return {'first':first,'second':second,'third':third,'scoreDiff':scoreDiff,'outs':outs}               
 
 def parseAtBat(play,prevAtBat):
