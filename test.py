@@ -110,3 +110,11 @@ testCase(ex,eOuts=0,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
 print('tests catchers interference')
 ex = 'play,9,1,cruzj002,??,,C/E2.1-2'
 testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=0)
+
+print('tests Fielders choice with one out at home. batter is safe')
+ex = 'play,4,0,harpb001,22,BBFSFX,FC5/G5.3XH(52)'
+testCase(ex,eOuts=1,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
+
+print('tests Fielders choice with no outs')
+ex = 'play,5,1,jordr001,00,X,FC3/G3S.3-H;1-2'
+testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=1)
