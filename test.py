@@ -19,7 +19,7 @@ def testCase(play, eOuts, eFirst, eSecond, eThird, eScoreDiff):
     elif (result.scoreDiff != eScoreDiff):
         raise AssertionError("scoreDiff does not match")
     else:
-        print("Test passed")
+        print("Test passed\n")
 
 print('tests double play')
 ex = 'play,7,0,backw001,11,FBX,64(1)3/GDP/G6'
@@ -56,3 +56,15 @@ testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
 print('tests runner picked off caught stealing')
 ex = 'play,6,1,javis001,10,B1,POCS2(1361)'
 testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
+
+print('tests batter tagged out at base not normally covered by fielder')
+ex = 'play,7,1,tempg001,00,X,54(B)/BG25/SH.1-2'
+testCase(ex,eOuts=1,eFirst=False,eSecond=True,eThird=False,eScoreDiff=0)
+
+print('tests Force out where batter is also out')
+ex = 'play,2,0,espid001,00,X,36(1)/FO/G.3-H'
+testCase(ex,eOuts=2,eFirst=False,eSecond=False,eThird=False,eScoreDiff=-1)
+
+print('tests 1b runner being forced out. Allows batter to first and runner scores')
+ex = 'play,5,0,gileb001,10,BX,54(1)/FO/G5.3-H;B-1'
+testCase(ex,eOuts=1,eFirst=True,eSecond=False,eThird=False,eScoreDiff=-1)

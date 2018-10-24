@@ -133,8 +133,7 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
         outs+=1
         if(ignoreBatter):
             outs-=1
-        if(fieldPlay.find('FO') != -1):
-            outs -=1
+            first = True
     return {'first':first,'second':second,'third':third,'scoreDiff':scoreDiff,'outs':outs}               
 
 def parseAtBat(play,prevAtBat):
