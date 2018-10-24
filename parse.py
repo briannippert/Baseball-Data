@@ -78,9 +78,32 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
         elif(runner == 'H'):
             third = False
 
+    poPos = batterPlay.find('PO')
+    if(poPos != -1 and batterPlay[poPos + 4] != 'E'):
+        outs+=1
+        runner = batterPlay[poPos+2]
+        if(runner == '1'):
+            first = False
+        elif(runner == '2'):
+            second = False
+        elif(runner == '3'):
+            third = False
+        elif(runner == 'C'):
+            #runner was caught stealing
+            runner = batterPlay[poPos+4]
+            if(runner == '2'):
+                first = False
+            elif(runner == '3'):
+                second = False
+            elif(runner == 'H'):
+                third = False
+            
+
+
+
     if(ignoreBatter == False):
         if(batterPlay[0]=='S' 
-            or batterPlay[0:2]=='HP' 
+            or batterPlay[:2]=='HP' 
             or batterPlay[0]=='C' 
             or batterPlay[0]=='E'
             or batterPlay[0]=='W'):
@@ -94,6 +117,8 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
                 scoreDiff += 1
             else:
                 scoreDiff -= 1  
+    
+    
                 
     if(batterPlay[0].isdigit()):
         if(batterPlay.find('(')!=-1):
