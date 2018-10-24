@@ -1,7 +1,5 @@
 from parse import *
 
-
-
 def testCase(play, eOuts, eFirst, eSecond, eThird, eScoreDiff):
     #takes in a play and tests the result 
     detailedLine = play.split(',')
@@ -68,3 +66,43 @@ testCase(ex,eOuts=2,eFirst=False,eSecond=False,eThird=False,eScoreDiff=-1)
 print('tests 1b runner being forced out. Allows batter to first and runner scores')
 ex = 'play,5,0,gileb001,10,BX,54(1)/FO/G5.3-H;B-1'
 testCase(ex,eOuts=1,eFirst=True,eSecond=False,eThird=False,eScoreDiff=-1)
+
+print('tests single')
+ex = 'play,8,0,pacit001,??,,S7'
+testCase(ex,eOuts=0,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
+
+print('tests bases loaded clearing double')
+ex = 'play,2,1,santn001,12,CFBX,D7/G5.3-H;2-H;1-H'
+testCase(ex,eOuts=0,eFirst=False,eSecond=True,eThird=False,eScoreDiff=3)
+
+print('tests triple with runner on second')
+ex = 'play,3,0,raint001,11,CBX,T9/F9LD.2-H'
+testCase(ex,eOuts=0,eFirst=False,eSecond=False,eThird=True,eScoreDiff=-1)
+
+print('tests ground rule double with runner scoring')
+ex = 'play,3,0,surhb001,10,.BX,DGR/L9LS.2-H'
+testCase(ex,eOuts=0,eFirst=False,eSecond=True,eThird=False,eScoreDiff=-1)
+
+print('tests solo home run')
+ex = 'play,8,0,bellg001,21,CBBX,H/L7D'
+testCase(ex,eOuts=0,eFirst=False,eSecond=False,eThird=False,eScoreDiff=-1)
+
+print('tests 3 run homerun')
+ex = 'play,12,1,bichd001,02,FFFX,HR/F78XD.2-H;1-H'
+testCase(ex,eOuts=0,eFirst=False,eSecond=False,eThird=False,eScoreDiff=3)
+
+print('tests inside the park hr')
+ex = 'play,4,0,younr001,32,FBFFFBBX,HR9/F9LS.3-H;1-H'
+testCase(ex,eOuts=0,eFirst=False,eSecond=False,eThird=False,eScoreDiff=-3)
+
+print('tests error on foul. no changes')
+ex = 'play,5,0,murre001,00,F,FLE5/P5F'
+testCase(ex,eOuts=0,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
+
+print('tests hit by pitch')
+ex = 'play,1,1,lansc001,00,H,HP.1-2'
+testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=0)
+
+print('tests intentional walk')
+ex = 'play,8,0,sciom001,30,B+22.III,IW'
+testCase(ex,eOuts=0,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
