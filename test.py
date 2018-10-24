@@ -1,13 +1,6 @@
 from parse import *
 
-testlines = """
-play,4,0,guerp001,00,22,PO2(14)
-play,6,1,javis001,10,B1,POCS2(1361)"""
-testlines = testlines.split()
-# for line in testlines:
-#     detailedLine = line.split(',')
-#     ret = parseAtBat(detailedLine[1:],None)
-#     print(line, '\n',ret,'\n')
+
 
 def testCase(play, eOuts, eFirst, eSecond, eThird, eScoreDiff):
     #takes in a play and tests the result 
@@ -54,12 +47,12 @@ testCase(ex,eOuts=0,eFirst=False,eSecond=False,eThird=True,eScoreDiff=0)
 
 print('tests defensive indifference')
 ex = 'play,9,0,bencj101,??,,DI.1-2'
-testCase(ex,eOuts=1,eFirst=False,eSecond=True,eThird=False,eScoreDiff=0)
+testCase(ex,eOuts=0,eFirst=False,eSecond=True,eThird=False,eScoreDiff=0)
 
-print('tests caught stealing where a runner progresses')
-ex = 'play,1,0,bayld001,??,,CS2(24).2-3'
-testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=True,eScoreDiff=0)
+print('tests runner picked off')
+ex = 'play,4,0,guerp001,00,22,PO2(14)'
+testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
 
-print('tests caught stealing where a runner progresses')
-ex = 'play,1,0,bayld001,??,,CS2(24).2-3'
-testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=True,eScoreDiff=0)
+print('tests runner picked off caught stealing')
+ex = 'play,6,1,javis001,10,B1,POCS2(1361)'
+testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
