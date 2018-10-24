@@ -99,7 +99,7 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
     if(ignoreBatter == False):
         if(batterPlay[0]=='S' 
             or batterPlay[:2]=='HP' 
-            or batterPlay[0]=='C' 
+            or batterPlay[0:2]=='C/' 
             or batterPlay[0]=='E'
             or batterPlay[0]=='W'):
             first = True
