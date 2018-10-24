@@ -90,13 +90,8 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
             third = False
         elif(runner == 'C'):
             #runner was caught stealing
-            runner = batterPlay[poPos+4]
-            if(runner == '2'):
-                first = False
-            elif(runner == '3'):
-                second = False
-            elif(runner == 'H'):
-                third = False
+            #an out was already accounted for, so we need to subtract one
+            outs-=1
             
 
 
