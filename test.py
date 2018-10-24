@@ -106,3 +106,7 @@ testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=0)
 print('tests intentional walk')
 ex = 'play,8,0,sciom001,30,B+22.III,IW'
 testCase(ex,eOuts=0,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
+
+print('tests catchers interference')
+ex = 'play,9,1,cruzj002,??,,C/E2.1-2'
+testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=0)

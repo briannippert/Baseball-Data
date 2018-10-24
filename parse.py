@@ -93,13 +93,10 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
             #an out was already accounted for, so we need to subtract one
             outs-=1
             
-
-
-
     if(ignoreBatter == False):
         if(batterPlay[0]=='S' 
             or batterPlay[:2]=='HP' 
-            or batterPlay[0:2]=='C/' 
+            or batterPlay[0]=='C' and len(batterPlay) == 1 
             or batterPlay[0]=='E'
             or batterPlay[:2]=='IW' 
             or batterPlay[0]=='W'):
