@@ -6,11 +6,11 @@ const dbName = 'BaseBall-Data';
 
 
 function getStats() {
-    MongoClient.connect(url, function(err, client) {
+    MongoClient.connect(url, function(err, db) {
         if (err) throw err;
-        var dbo = db.db("BaseBall-Data");
-        var query = { address: "Park Lane 38" };
-        dbo.collection("BaseBall-Data").filter(query).toArray(function(err, result) {
+        var dbo = db.db("Baseball-Data");
+        var query = { inning: "116" };
+        dbo.collection("pitches").find(query).toArray(function(err, result) {
           if (err) throw err;
           console.log(result);
           db.close();
@@ -18,3 +18,4 @@ function getStats() {
     });
 }
 
+getStats()
