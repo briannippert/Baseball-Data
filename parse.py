@@ -257,7 +257,7 @@ def writeResults(gameId):
         if(gameId is None or gameDict["id"]==gameId):
             output.append(gameDict)
     jsonOut = json.dumps(output)
-    with(open('results.txt','w')) as wf:
+    with(open('results.json','w')) as wf:
         wf.write(jsonOut)
     
 
