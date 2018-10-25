@@ -252,7 +252,7 @@ def writeResults(gameId):
                     output[count] = pDict
                     count+=1
     jsonOut = json.dumps(output)
-    with(open('results.txt','w')) as wf:
+    with(open('results.json','w')) as wf:
         wf.write(jsonOut)
     
 
