@@ -72,8 +72,8 @@ Inning:18 Score:0 Outs:1 First:False Second:False Third:False
 Inning:09 Score:0 Outs:3 First:False Second:False Third:False
 Inning:09 Score:0 Outs:1 First:False Second:False Third:False
 Inning:09 Score:0 Outs:1 First:True Second:False Third:False
-Inning:09 Score:0 Outs:2 First:True Second:False Third:False
-Inning:19 Score:0 Outs:3 First:True Second:False Third:False
+Inning:09 Score:0 Outs:2 First:False Second:False Third:False
+Inning:19 Score:0 Outs:3 First:False Second:False Third:False
 Inning:19 Score:0 Outs:1 First:False Second:False Third:False
 Inning:19 Score:0 Outs:2 First:False Second:False Third:False
 Inning:010 Score:0 Outs:3 First:False Second:False Third:False

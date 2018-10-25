@@ -78,11 +78,28 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
         elif(runner == 'H'):
             third = False
 
+    poPos = batterPlay.find('PO')
+    if(poPos != -1 and batterPlay[poPos + 4] != 'E'):
+        outs+=1
+        runner = batterPlay[poPos+2]
+        if(runner == '1'):
+            first = False
+        elif(runner == '2'):
+            second = False
+        elif(runner == '3'):
+            third = False
+        elif(runner == 'C'):
+            #runner was caught stealing
+            #an out was already accounted for, so we need to subtract one
+            outs-=1
+            
     if(ignoreBatter == False):
         if(batterPlay[0]=='S' 
-            or batterPlay[0:2]=='HP' 
-            or batterPlay[0]=='C' 
+            or batterPlay[:2]=='HP'  
+            or batterPlay[:2]=='FC' 
+            or batterPlay[0]=='C' and len(batterPlay) == 1 
             or batterPlay[0]=='E'
+            or batterPlay[:2]=='IW' 
             or batterPlay[0]=='W'):
             first = True
         elif(batterPlay[0]=='D'):
@@ -94,14 +111,12 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
                 scoreDiff += 1
             else:
                 scoreDiff -= 1  
+    
+    
                 
     if(batterPlay[0].isdigit()):
-        # print(fieldPlay,batterPlay)
-        singleOut = True
         if(batterPlay.find('(')!=-1):
-            outs+=1
             while(batterPlay.find('(')!=-1):
-                singleOut = False
                 parenPos = batterPlay.find('(')
                 runnerOut = batterPlay[parenPos+1]
                 if(runnerOut == '1'):
@@ -114,10 +129,10 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
                     outs-=1
                 batterPlay=batterPlay[parenPos+3:]
                 outs+=1
-        if(singleOut):
-            outs+=1
+        outs+=1
         if(ignoreBatter):
             outs-=1
+            first = True
     return {'first':first,'second':second,'third':third,'scoreDiff':scoreDiff,'outs':outs}               
 
 def parseAtBat(play,prevAtBat):
@@ -224,51 +239,21 @@ def getFilePath(file):
     filePath = os.path.join('.',"2017eve",file)
     return filePath
 
-def testGame(f):
-    with open(f) as fp:
-        gameId = None
-        game = []
-        prevBatter = None
-        for line in fp:
-            lineDetailed = line.strip().split(',')
-            if(lineDetailed[0]=='id'):
-                gameId = lineDetailed[1]
-            if(lineDetailed[0]=='play' ):
-                if(lineDetailed[6]=='NP' and lineDetailed[5] == ''): continue #ignore non-injury subs
-                prevAtBat = None
-                if (len(game)>0):
-                    prevAtBat = game[-1]
-                if(lineDetailed[5].find('.') != -1 and prevBatter == lineDetailed[3]):
-                    game.pop()
-                atBat = parseAtBat(lineDetailed[1:], prevAtBat)
-                prevBatter = lineDetailed[3]
-                game.append(atBat)
-        #add final game to list
-        
-        with(open('test.txt','w')) as testFile:
-            testFile.write('Game ID: ' + gameId + '\n')
-            for ab in game:
-                testFile.write(str(ab) + '\n')
-
 def writeResults(gameId):
-    output = []
+    output = {}
     for g in games:
         gameDict = g.toDict()
         if(gameId is None or gameDict["id"]==gameId):
-            output.append(gameDict)
+            output[g.id] = gameDict
     jsonOut = json.dumps(output)
     with(open('results.json','w')) as wf:
         wf.write(jsonOut)
     
 
-
-
 if __name__ == "__main__":
-    testFile = getFilePath('TESTBOS201707180.EVA')
     readFile(getFilePath('2017BOS.EVA'))
     print(len(games))
     testGameId = None
     # testGameId = 'BOS201707180'
     writeResults(testGameId)
-    testGame(testFile)
     
