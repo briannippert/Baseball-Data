@@ -10,7 +10,7 @@ function getStats() {
         if (err) throw err;
         var dbo = db.db("BaseBall-Data");
         var query = { address: "Park Lane 38" };
-        dbo.collection("BaseBall-Data").find(query).toArray(function(err, result) {
+        dbo.collection("BaseBall-Data").filter(query).toArray(function(err, result) {
           if (err) throw err;
           console.log(result);
           db.close();
