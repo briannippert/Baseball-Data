@@ -8,5 +8,11 @@
         "string_view": "cpp",
         "fstream": "cpp",
         "locale": "cpp"
+    },
+    "mongoRunner": {
+        "connection": {
+            "url": "mongodb://localhost:27017",
+            "activeOnStartUp": true,
+        }
     }
 }
