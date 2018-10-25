@@ -5,12 +5,13 @@ myclient = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["Baseball-Data"]
 myCol = mydb["pitches"]
 
-# myquery = {"atBats.inning":"116"}
+myquery = {'$and': 
+            [{"inning":"116"},
+            {'scoreDiff':0}]
+}  
 
-# mydoc = myCol.find(myquery)
+mydoc = myCol.find(myquery)
+for x in mydoc:
+  print(x)
+print(mydoc.count())
 
-# for x in mydoc:
-#   print(x)
-
-x = myCol.find()
-print(x[0])
