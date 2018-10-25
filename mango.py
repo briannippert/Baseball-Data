@@ -13,11 +13,28 @@ myCol = mydb["BaseBall-Data"]
 #   print(x)
 
 data = myCol.aggregate([
-    {'$match': {'$and': 
-                    [{'atBats.pitches.strike':2},
-                    {'atBats.inning':'116'}]
-                }}
+    {'$match': {'atBats.inning':'116'}},
+    {'$unwind': {'path':'$atBats.pitches'}}
+    
+    # {'$match':}
 ])
 
+# data = myCol.aggregate([
+#     {'$match': {
+#         '$and': 
+#             [{'atBats.pitches.strike':2},
+#             {'atBats.inning':'116'}]
+#     }}
+#     {'$project': {
+#         'atBats': {'$filter': {
+#             'input': '$atBats',
+#             'as': 'atBat',
+#             'cond': {'$eq':
+#                 ['$$atBats.inning']
+#             }
+#         }}
+
+#     }}
+# ])
 for x in data:
     print(x)

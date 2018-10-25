@@ -241,10 +241,16 @@ def getFilePath(file):
 
 def writeResults(gameId):
     output = {}
+    count = 0
     for g in games:
-        gameDict = g.toDict()
-        if(gameId is None or gameDict["id"]==gameId):
-            output[g.id] = gameDict
+        if(gameId is None or g.id==gameId):
+            for atBat in g.atBats:
+                for p in atBat.pitches:
+                    pDict = p.toDict()
+                    pDict["gameId"] = g.id
+                    pDict["winningTeam"] = g.winningTeam
+                    output[count] = pDict
+                    count+=1
     jsonOut = json.dumps(output)
     with(open('results.txt','w')) as wf:
         wf.write(jsonOut)
