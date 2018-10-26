@@ -1,16 +1,18 @@
-games = []
+pitches = []
 import os
 from pitch import pitch
 from atBat import atBat
 from game import game
+from status import status
 import json
 
 strikePlays = ['C','K','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
 activePlay = ['H','X','Y']
 foulPlays = ['F','L','R']
+gameStatus = status()
 
-def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
+def parseFieldPlay(fieldPlay,isBottom):
     slashPos = fieldPlay.find('/')
     periodPos = fieldPlay.find('.')
     batterPlay = fieldPlay
@@ -30,14 +32,14 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
             if(p[1]=='X'):
                 #players out
                 if(p[0]=='1'):
-                    first=False
+                    gameStatus.first=False
                 elif(p[0]=='2'):
-                    second=False
+                    gameStatus.second=False
                 elif(p[0]=='3'):
-                    third=False
+                    gameStatus.third=False
                 elif(p[0]=='B'):
                     ignoreBatter = True
-                outs+=1
+                gameStatus.out+=1
             else:#if(p[1]=='-')
                 start = p[0]
                 end = p[2]
@@ -46,52 +48,52 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
 
         for start in starts:
             if(start == '1'):
-                first=False
+                gameStatus.first=False
             elif(start=='2'):
-                second=False
+                gameStatus.second=False
             elif(start=='3'):
-                third=False 
+                gameStatus.third=False 
             elif(start=='B'):
                 ignoreBatter=True
 
         for end in ends:
             if(end == '1'):
-                first=True
+                gameStatus.first=True
             elif(end=='2'):
-                second=True
+                gameStatus.second=True
             elif(end=='3'):
-                third=True
+                gameStatus.third=True
             else:#HOME
                 if(isBottom == '1'):
-                    scoreDiff += 1
+                    gameStatus.scoreDiff += 1
                 else:
-                    scoreDiff -= 1  
+                    gameStatus.scoreDiff -= 1  
     
     csPos = batterPlay.find('CS')
     if(csPos != -1 and batterPlay[csPos + 5] != 'E'):
-        outs+=1
+        gameStatus.out+=1
         runner = batterPlay[csPos+2]
         if(runner == '2'):
-            first = False
+            gameStatus.first = False
         elif(runner == '3'):
-            second = False
+            gameStatus.second = False
         elif(runner == 'H'):
-            third = False
+            gameStatus.third = False
 
     poPos = batterPlay.find('PO')
     if(poPos != -1 and batterPlay[poPos + 4] != 'E'):
-        outs+=1
+        gameStatus.out+=1
         runner = batterPlay[poPos+2]
         if(runner == '1'):
-            first = False
+            gameStatus.first = False
         elif(runner == '2'):
-            second = False
+            gameStatus.second = False
         elif(runner == '3'):
-            third = False
+            gameStatus.third = False
         elif(runner == 'C'):
             #runner was caught stealing
             #an out was already accounted for, so we need to subtract one
-            outs-=1
+            gameStatus.out-=1
             
     if(ignoreBatter == False):
         if(batterPlay[0]=='S' 
@@ -101,18 +103,16 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
             or batterPlay[0]=='E'
             or batterPlay[:2]=='IW' 
             or batterPlay[0]=='W'):
-            first = True
+            gameStatus.first = True
         elif(batterPlay[0]=='D'):
-            second = True
+            gameStatus.second = True
         elif(batterPlay[0]=='T'):
-            third = True
+            gameStatus.third = True
         elif(batterPlay[0]=='H'):
             if(isBottom == '1'):
-                scoreDiff += 1
+                gameStatus.scoreDiff += 1
             else:
-                scoreDiff -= 1  
-    
-    
+                gameStatus.scoreDiff -= 1  
                 
     if(batterPlay[0].isdigit()):
         if(batterPlay.find('(')!=-1):
@@ -120,97 +120,76 @@ def parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom):
                 parenPos = batterPlay.find('(')
                 runnerOut = batterPlay[parenPos+1]
                 if(runnerOut == '1'):
-                    first=False
+                    gameStatus.first=False
                 elif(runnerOut=='2'):
-                    second=False
+                    gameStatus.second=False
                 elif(runnerOut=='3'):
-                    third=False 
+                    gameStatus.third=False 
                 elif(runnerOut=='B'):
-                    outs-=1
+                    gameStatus.out-=1
                 batterPlay=batterPlay[parenPos+3:]
-                outs+=1
-        outs+=1
+                gameStatus.out+=1
+        gameStatus.out+=1
         if(ignoreBatter):
-            outs-=1
-            first = True
-    return {'first':first,'second':second,'third':third,'scoreDiff':scoreDiff,'outs':outs}               
-
-def parseAtBat(play,prevAtBat):
-    inning = play[0]
+            gameStatus.out-=1
+            gameStatus.first = True
+    
+def parseAtBat(play):
+    inning = play[1] + play[0] 
     isBottom = play[1] #top = 0, bottom = 1
+    batter = play[2]
     pitchPlay = play[4]
+    
     fieldPlay = play[5]
     # print("Play",play,"Pitchplay",pitchPlay,"fieldplay",fieldPlay)
     pitches = []
-    strikes = 0
-    balls = 0
-    
-    outs = 0
-    scoreDiff = 0
-    first = False
-    second = False 
-    third = False
-
-   
-    if(prevAtBat != None):
-        outs = prevAtBat.outs
-        scoreDiff = prevAtBat.scoreDiff
-        first = prevAtBat.first
-        second = prevAtBat.second
-        third = prevAtBat.third
-        if('.' in pitchPlay):
-            try:
-                prevCount = prevAtBat.getCurrentState()
-                strikes = prevCount.strike
-                balls = prevCount.ball
-                pitches = prevAtBat.pitches
-                while('.' in pitchPlay):
-                    pitchPlay = pitchPlay[pitchPlay.find('.')+1:]
-            except:
-                print(play)
+    if(gameStatus.prevBatter == batter):
+        try:
+            
+            while('.' in pitchPlay):
+                pitchPlay = pitchPlay[pitchPlay.find('.')+1:]
+        except Exception as e:
+            print(play, e)
+    else:
+        gameStatus.newBatter()
            
-    if(outs >= 3):
-        outs = 0
-        first = False
-        second = False
-        third = False
+    if(gameStatus.out >= 3):
+        gameStatus.newInning()
 
     for p in pitchPlay:
+        prevStatus = gameStatus.duplicateStatus()  
         if(p in strikePlays):
-            strikes +=1
-            if (strikes == 3):
-                outs += 1
-        elif(p in ballPlays):
-            balls+=1
-        elif(p in foulPlays):
-            if(strikes<3):
-                strikes+=1
-        elif(p not in activePlay): continue
-        newPitch = pitch(balls, strikes, outs, scoreDiff, p, first, second, third, None)
-        pitches.append(newPitch)
-    retVals = parseFieldPlay(fieldPlay,first,second,third,scoreDiff,outs,isBottom)
-    first = retVals["first"]
-    second = retVals["second"]
-    third = retVals["third"]
-    scoreDiff = retVals["scoreDiff"]
-    outs = retVals["outs"]
-    print('Strikes: {} Balls: {} Outs: {} ScoreDiff: {} Pitches: {}'.format(strikes,balls,outs,scoreDiff,pitchPlay))
-    inning = isBottom + inning
-    retBat = atBat(pitches,inning,first,second,third,outs,scoreDiff)
-    return retBat
+            gameStatus.strike +=1
+            if (gameStatus.strike == 3):
+                gameStatus.out += 1
+                
 
-def createGame(gameId,atBats): 
-    lastBat = atBats[-1]
+        elif(p in ballPlays):
+            gameStatus.ball+=1
+        elif(p in foulPlays):
+            
+            if(gameStatus.strike<3):
+                gameStatus.strike+=1
+        elif(p not in activePlay): continue
+        newPitch = pitch(prevStatus.ball, prevStatus.strike, prevStatus.out, prevStatus.scoreDiff, p, prevStatus.first, prevStatus.second, prevStatus.third, inning)
+        
+        pitches.append(newPitch)
+
+    parseFieldPlay(fieldPlay,isBottom)
+    return retPitches
+
+def createGame(gameId,game): 
+    lastBat = game[-1]
     finalScore = lastBat.scoreDiff
     winner = finalScore >= 0
-    newGame = game(gameId,winner,atBats,None)  
-    games.append(newGame)
+    for pitch in game:
+        pitch.winningTeam = winner
+        pitches.append(pitch)
 
 def readFile(f):
     with open(f) as fp:
         gameId = None
         game = []
-        prevBatter = None
         
         for line in fp:
             lineDetailed = line.strip().split(',')
@@ -219,19 +198,14 @@ def readFile(f):
                     # games[gameId] = game
                     createGame(gameId,game)
                     game = []
-                    prevBatter = None
+                    gameStatus.clear()
 
                 gameId = lineDetailed[1]
             if(lineDetailed[0]=='play' ):
                 if(lineDetailed[6]=='NP' and lineDetailed[5] == ''): continue #ignore non-injury subs
-                prevAtBat = None
-                if (len(game)>0):
-                    prevAtBat = game[-1]
-                if(lineDetailed[5].find('.') != -1 and prevBatter == lineDetailed[3]):
-                    game.pop()
-                atBat = parseAtBat(lineDetailed[1:], prevAtBat)
+                retPitches = parseAtBat(lineDetailed[1:])
                 prevBatter = lineDetailed[3]
-                game.append(atBat)
+                game.extend(retPitches)
         #add final game to list
         createGame(gameId,game)
 
@@ -257,8 +231,8 @@ def writeResults(gameId):
     
 
 if __name__ == "__main__":
-    # readFile(getFilePath('2017BOS.EVA'))
-    readFile(getFilePath('TESTBOS201707180.EVA'))
+    readFile(getFilePath('2017BOS.EVA'))
+    # readFile(getFilePath('TESTBOS201707180.EVA'))
     print(len(games))
     testGameId = None
     # testGameId = 'BOS201707180'
