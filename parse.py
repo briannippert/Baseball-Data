@@ -194,7 +194,7 @@ def parseAtBat(play,prevAtBat):
     third = retVals["third"]
     scoreDiff = retVals["scoreDiff"]
     outs = retVals["outs"]
-    # print('Strikes: {} Balls: {} Outs: {} ScoreDiff: {} Pitches: {}'.format(strikes,balls,outs,scoreDiff,pitchPlay))
+    print('Strikes: {} Balls: {} Outs: {} ScoreDiff: {} Pitches: {}'.format(strikes,balls,outs,scoreDiff,pitchPlay))
     inning = isBottom + inning
     retBat = atBat(pitches,inning,first,second,third,outs,scoreDiff)
     return retBat
@@ -257,7 +257,8 @@ def writeResults(gameId):
     
 
 if __name__ == "__main__":
-    readFile(getFilePath('2017BOS.EVA'))
+    # readFile(getFilePath('2017BOS.EVA'))
+    readFile(getFilePath('TESTBOS201707180.EVA'))
     print(len(games))
     testGameId = None
     # testGameId = 'BOS201707180'
