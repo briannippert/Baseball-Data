@@ -142,7 +142,7 @@ def parseAtBat(play):
     
     fieldPlay = play[5]
     # print("Play",play,"Pitchplay",pitchPlay,"fieldplay",fieldPlay)
-    pitches = []
+    retPitches = []
     if(gameStatus.prevBatter == batter):
         try:
             
@@ -173,7 +173,7 @@ def parseAtBat(play):
         elif(p not in activePlay): continue
         newPitch = pitch(prevStatus.ball, prevStatus.strike, prevStatus.out, prevStatus.scoreDiff, p, prevStatus.first, prevStatus.second, prevStatus.third, inning)
         
-        pitches.append(newPitch)
+        retPitches.append(newPitch)
 
     parseFieldPlay(fieldPlay,isBottom)
     return retPitches
@@ -182,8 +182,9 @@ def createGame(gameId,game):
     lastBat = game[-1]
     finalScore = lastBat.scoreDiff
     winner = finalScore >= 0
-    for pitch in game:
+    for index,pitch in enumerate(game):
         pitch.winningTeam = winner
+        pitch.id = gameId + str(index)
         pitches.append(pitch)
 
 def readFile(f):
@@ -213,18 +214,11 @@ def getFilePath(file):
     filePath = os.path.join('.',"2017eve",file)
     return filePath
 
-def writeResults(gameId):
+def writeResults():
     output = []
     count = 0
-    for g in games:
-        if(gameId is None or g.id==gameId):
-            for atBat in g.atBats:
-                for p in atBat.pitches:
-                    pDict = p.toDict()
-                    pDict["gameId"] = g.id
-                    pDict["winningTeam"] = g.winningTeam
-                    pDict["inning"] = atBat.inning
-                    output.append(pDict)
+    for p in pitches:
+        output.append(p.toDict())
     jsonOut = json.dumps(output)
     with(open('results.json','w')) as wf:
         wf.write(jsonOut)
@@ -233,8 +227,6 @@ def writeResults(gameId):
 if __name__ == "__main__":
     readFile(getFilePath('2017BOS.EVA'))
     # readFile(getFilePath('TESTBOS201707180.EVA'))
-    print(len(games))
-    testGameId = None
-    # testGameId = 'BOS201707180'
-    writeResults(testGameId)
+    print(len(pitches))
+    writeResults()
     

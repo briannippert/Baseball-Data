@@ -1,5 +1,5 @@
 class pitch:
-    def __init__(self, ball, strike, out, scoreDiff, outcome, first, second, third, inning, winningTeam=None):
+    def __init__(self, ball, strike, out, scoreDiff, outcome, first, second, third, inning, winningTeam=None, id=None):
         self.ball = ball
         self.strike = strike
         self.out = out
@@ -10,6 +10,7 @@ class pitch:
         self.third = third
         self.inning = inning
         self.winningTeam = winningTeam
+        self.id= id
     def toDict(self):
         data = {}
         data["ball"] = self.ball
@@ -22,6 +23,7 @@ class pitch:
         data["third"] = self.third
         data["inning"] = self.inning
         data["winningTeam"] = self.winningTeam
+        data["id"] = self.id
         return data
 
 
