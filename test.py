@@ -118,3 +118,11 @@ testCase(ex,eOuts=1,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
 print('tests Fielders choice with no outs')
 ex = 'play,5,1,jordr001,00,X,FC3/G3S.3-H;1-2'
 testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=1)
+
+print('tests Fielders error with implicit batter')
+ex = 'play,2,0,ruffb001,10,BX,E1/TH/BG15.1-3'
+testCase(ex,eOuts=0,eFirst=True,eSecond=False,eThird=True,eScoreDiff=0)
+
+print('tests Fielders error with explicit batter')
+ex = 'play,5,1,young001,00,X,E3.1-2;B-1'
+testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=0)
