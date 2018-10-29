@@ -17,11 +17,11 @@ app.get('/Calculate', function (req, res) {
   if (query.third == null) {
     query.third = false;
   }
-  console.log("First Base: " + query.first);
+  console.log(query);
   console.log(inning);
   var nums = dataAccess.getStats(query.balls, query.strikes, query.outs, query.scoreDiff, query.first, query.second, query.third, inning);
   res.send(nums);
 });
 
 app.use(express.static('public'));
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Baseball Data listening on port ${port}!`));
