@@ -137,17 +137,26 @@ print('tests force out with batter not implicitly stated')
 ex = 'play,2,1,leons001,11,BCX,54(1)/FO/G.3-H;2-3'
 testCase(ex,eOuts=1,eFirst=True,eSecond=False,eThird=True,eScoreDiff=1)
 
+print('tests strikeout + runner put out at second')
+ex = 'play,4,1,stubf001,32,CBFBBFFS,K/DP.1X2(26)'
+testCase(ex,eOuts=2,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
 
+print('tests single + throwing error to third. no outs')
+ex = 'play,7,0,puckk001,01,CX,S5/G5.1-3(E5/TH)'
+testCase(ex,eOuts=0,eFirst=True,eSecond=False,eThird=True,eScoreDiff=0)
+
+print('tests single where batter makes it to second due to throwing error. 2 runs score')
+ex = 'play,3,0,fielc001,00,X,S7/L7LD.3-H;2-H;BX2(7E4)'
+testCase(ex,eOuts=0,eFirst=False,eSecond=True,eThird=False,eScoreDiff=-2)
 
 
 print('test inning')
-ex = '''play,2,1,benia002,01,CX,1/G
-play,2,1,ramih003,30,BBBB,W
-play,2,1,morem001,21,BSBX,S8/G.1-2
-play,2,1,bradj001,22,FB*BSFB,WP.2-3;1-2
-play,2,1,bradj001,32,FB*BSFB.B,W
-play,2,1,leons001,11,BCX,54(1)/FO/G.3-H;2-3
-play,2,1,marrd001,02,CCS,K'''
+ex = '''play,4,1,travs001,32,BSBBSB,W
+play,4,1,vazqc001,01,SX,S7/G.1-2
+play,4,1,marrd001,01,LX,FC6.1X2(6E4);2-3;B-1
+play,4,1,bettm001,10,*BX,5/P5F
+play,4,1,pedrd001,32,BBC*BSX,S7/G.3-H;2-3;1-2
+play,4,1,bogax001,22,BCBFFX,46(1)3/GDP'''
 testInning(ex)
 
 

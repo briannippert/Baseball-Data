@@ -29,7 +29,7 @@ def parseFieldPlay(fieldPlay,isBottom):
         starts = []
         ends = []
         for p in runPlays:
-            if(p[1]=='X'):
+            if(p[1]=='X' and p.find('E')==-1):
                 #players out
                 if(p[0]=='1'):
                     gameStatus.first=False
