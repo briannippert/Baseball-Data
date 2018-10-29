@@ -28,6 +28,7 @@ def testInning(plays):
     gameStatus.clear()
     for atBat in plays.split():
         detailedLine = atBat.strip().split(',')
+        if(detailedLine[0] != 'play'):continue
         pRes = parseAtBat(detailedLine[1:])
         print(atBat)
         print(gameStatus)
@@ -75,10 +76,6 @@ testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
 print('tests batter tagged out at base not normally covered by fielder')
 ex = 'play,7,1,tempg001,00,X,54(B)/BG25/SH.1-2'
 testCase(ex,eOuts=1,eFirst=False,eSecond=True,eThird=False,eScoreDiff=0)
-
-print('tests Force out where batter is also out')
-ex = 'play,2,0,espid001,00,X,36(1)/FO/G.3-H'
-testCase(ex,eOuts=2,eFirst=False,eSecond=False,eThird=False,eScoreDiff=-1)
 
 print('tests 1b runner being forced out. Allows batter to first and runner scores')
 ex = 'play,5,0,gileb001,10,BX,54(1)/FO/G5.3-H;B-1'
@@ -136,26 +133,30 @@ print('tests Fielders choice with no outs')
 ex = 'play,5,1,jordr001,00,X,FC3/G3S.3-H;1-2'
 testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=1)
 
+print('tests force out with batter not implicitly stated')
+ex = 'play,2,1,leons001,11,BCX,54(1)/FO/G.3-H;2-3'
+testCase(ex,eOuts=1,eFirst=True,eSecond=False,eThird=True,eScoreDiff=1)
+
+print('tests strikeout + runner put out at second')
+ex = 'play,4,1,stubf001,32,CBFBBFFS,K/DP.1X2(26)'
+testCase(ex,eOuts=2,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
+
+print('tests single + throwing error to third. no outs')
+ex = 'play,7,0,puckk001,01,CX,S5/G5.1-3(E5/TH)'
+testCase(ex,eOuts=0,eFirst=True,eSecond=False,eThird=True,eScoreDiff=0)
+
+print('tests single where batter makes it to second due to throwing error. 2 runs score')
+ex = 'play,3,0,fielc001,00,X,S7/L7LD.3-H;2-H;BX2(7E4)'
+testCase(ex,eOuts=0,eFirst=False,eSecond=True,eThird=False,eScoreDiff=-2)
+
+
 print('test inning')
-ex = '''play,6,1,bradj001,00,,NP
-play,6,1,bradj001,10,.BX,53/G
-play,6,1,leons001,12,BCSS,K
-play,6,1,marrd001,31,BBBCB,W
-play,6,1,bettm001,00,,NP
-play,6,1,bettm001,32,.BCBFFB>B,W.1-2
-play,6,1,pedrd001,01,CX,D9/L.2-H;1-H
-play,6,1,bogax001,12,BCFX,D8/L.2-H
-play,6,1,benia002,30,VVVV,IW
-play,6,1,ramih003,32,BSCBB>B,W.2-3;1-2
-play,6,1,morem001,01,CB,WP.3-H(NR);2-3;1-2
-play,6,1,morem001,22,CB.SFBS,K
-play,7,0,hoyij001,22,BCFBX,S7/L
-play,7,0,deshd002,12,CFBH,HP.1-2
-play,7,0,choos001,11,BFX,S7/L+.2-H;1-3
-play,7,0,andre001,21,B*BSX,46(1)3/GDP.3-H
-play,7,0,mazan001,12,CSBX,S9/L
-play,7,0,lucrj001,00,,NP
-play,7,0,lucrj001,11,BTX,D8/L/MREV.1XH(862)'''
+ex = '''play,4,1,travs001,32,BSBBSB,W
+play,4,1,vazqc001,01,SX,S7/G.1-2
+play,4,1,marrd001,01,LX,FC6.1X2(6E4);2-3;B-1
+play,4,1,bettm001,10,*BX,5/P5F
+play,4,1,pedrd001,32,BBC*BSX,S7/G.3-H;2-3;1-2
+play,4,1,bogax001,22,BCBFFX,46(1)3/GDP'''
 testInning(ex)
 
 
