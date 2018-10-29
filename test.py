@@ -2,6 +2,7 @@ from parse import *
 
 def testCase(play, eOuts, eFirst, eSecond, eThird, eScoreDiff):
     #takes in a play and tests the result 
+    gameStatus.clear()
     detailedLine = play.split(',')
     pRes = parseAtBat(detailedLine[1:])
     print(play)
@@ -22,9 +23,10 @@ def testCase(play, eOuts, eFirst, eSecond, eThird, eScoreDiff):
         raise AssertionError("scoreDiff does not match")
     else:
         print("Test passed\n")
-    gameStatus.clear()
 
-
+def testInning():
+    pass
+    
 print('tests strikeout')
 ex = 'play,1,0,schwk001,22,BCBFFFS,K'
 testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
