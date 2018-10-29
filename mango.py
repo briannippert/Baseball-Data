@@ -14,4 +14,3 @@ mydoc = myCol.find(myquery)
 for x in mydoc:
   print(x)
 print(mydoc.count())
-
