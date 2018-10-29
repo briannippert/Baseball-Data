@@ -154,6 +154,8 @@ def parseAtBat(play):
         gameStatus.newBatter()
            
     if(gameStatus.out >= 3):
+        if(gameStatus.out > 3):
+            raise AssertionError(play, "4 outs recorded") 
         gameStatus.newInning()
 
     for p in pitchPlay:
@@ -168,7 +170,7 @@ def parseAtBat(play):
             gameStatus.ball+=1
         elif(p in foulPlays):
             
-            if(gameStatus.strike<3):
+            if(gameStatus.strike<2):
                 gameStatus.strike+=1
         elif(p not in activePlay): continue
         newPitch = pitch(prevStatus.ball, prevStatus.strike, prevStatus.out, prevStatus.scoreDiff, p, prevStatus.first, prevStatus.second, prevStatus.third, inning)
