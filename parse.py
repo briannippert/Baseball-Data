@@ -130,7 +130,7 @@ def parseFieldPlay(fieldPlay,isBottom):
                 batterPlay=batterPlay[parenPos+3:]
                 gameStatus.out+=1
         gameStatus.out+=1
-        if(ignoreBatter):
+        if(ignoreBatter or fieldPlay.find('FO')!= -1):
             gameStatus.out-=1
             gameStatus.first = True
     
