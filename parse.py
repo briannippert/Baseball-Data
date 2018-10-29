@@ -6,10 +6,10 @@ from game import game
 from status import status
 import json
 
-strikePlays = ['C','K','M','O','Q','S','T']
+strikePlays = ['C','K','L','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
 activePlay = ['H','X','Y']
-foulPlays = ['F','L','R']
+foulPlays = ['F','R']
 gameStatus = status()
 
 def parseFieldPlay(fieldPlay,isBottom):
@@ -112,10 +112,14 @@ def parseFieldPlay(fieldPlay,isBottom):
             if(isBottom == '1'):
                 gameStatus.scoreDiff += 1
             else:
-                gameStatus.scoreDiff -= 1  
+                gameStatus.scoreDiff -= 1 
+        elif(batterPlay[0]=='K'):
+            gameStatus.out += 1 
                 
     if(batterPlay[0].isdigit()):
         if(batterPlay.find('(')!=-1):
+            if(batterPlay.count('(')==2 and batterPlay.find('B')==-1):
+                gameStatus.out-=1
             while(batterPlay.find('(')!=-1):
                 parenPos = batterPlay.find('(')
                 runnerOut = batterPlay[parenPos+1]
@@ -159,15 +163,11 @@ def parseAtBat(play):
     for p in pitchPlay:
         prevStatus = gameStatus.duplicateStatus()  
         if(p in strikePlays):
-            gameStatus.strike +=1
-            if (gameStatus.strike == 3):
-                gameStatus.out += 1
-                
+            gameStatus.strike +=1              
 
         elif(p in ballPlays):
             gameStatus.ball+=1
-        elif(p in foulPlays):
-            
+        elif(p in foulPlays):            
             if(gameStatus.strike<2):
                 gameStatus.strike+=1
         elif(p not in activePlay): continue

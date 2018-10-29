@@ -149,14 +149,17 @@ print('tests single where batter makes it to second due to throwing error. 2 run
 ex = 'play,3,0,fielc001,00,X,S7/L7LD.3-H;2-H;BX2(7E4)'
 testCase(ex,eOuts=0,eFirst=False,eSecond=True,eThird=False,eScoreDiff=-2)
 
+print('tests strikeout where wild pitch leads to batter safe at first')
+ex = 'play,13,1,bradj001,22,BCFBS,K+WP.B-1'
+testCase(ex,eOuts=0,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
+
+print('tests double play where batter is not mentioned')
+ex = 'play,6,1,benia002,12,*BSFX,72(3)5(2)/GDP'
+testCase(ex,eOuts=2,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
+
 
 print('test inning')
-ex = '''play,4,1,travs001,32,BSBBSB,W
-play,4,1,vazqc001,01,SX,S7/G.1-2
-play,4,1,marrd001,01,LX,FC6.1X2(6E4);2-3;B-1
-play,4,1,bettm001,10,*BX,5/P5F
-play,4,1,pedrd001,32,BBC*BSX,S7/G.3-H;2-3;1-2
-play,4,1,bogax001,22,BCBFFX,46(1)3/GDP'''
+ex = '''play,6,1,benia002,12,*BSFX,72(3)5(2)/GDP'''
 testInning(ex)
 
 
