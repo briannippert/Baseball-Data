@@ -154,8 +154,6 @@ def parseAtBat(play):
         gameStatus.newBatter()
            
     if(gameStatus.out >= 3):
-        if(gameStatus.out > 3):
-            raise AssertionError(play, "4 outs recorded") 
         gameStatus.newInning()
 
     for p in pitchPlay:
@@ -178,6 +176,10 @@ def parseAtBat(play):
         retPitches.append(newPitch)
 
     parseFieldPlay(fieldPlay,isBottom)
+    
+    if(gameStatus.out > 3):
+        print(",".join(play), "4 outs recorded")
+
     return retPitches
 
 def createGame(gameId,game): 

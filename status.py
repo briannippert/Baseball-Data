@@ -39,3 +39,6 @@ class status:
         self.prevBatter = prevBatter
     def duplicateStatus(self):
         return status(self.ball,self.strike,self.out,self.scoreDiff,self.first,self.second,self.third,self.prevBatter)
+    def __repr__(self):
+        return 'Score:{} Outs:{} First:{} Second:{} Third:{} Count:{}{}'.format(self.scoreDiff,self.out,self.first,self.second,self.third,self.ball,self.strike)
+    
