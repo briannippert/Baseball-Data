@@ -3,21 +3,31 @@ from parse import *
 def testCase(play, eOuts, eFirst, eSecond, eThird, eScoreDiff):
     #takes in a play and tests the result 
     detailedLine = play.split(',')
-    result = parseAtBat(detailedLine[1:],None)
+    pRes = parseAtBat(detailedLine[1:])
     print(play)
-    print(result)
-    if (result.outs != eOuts):
+    if (gameStatus.out != eOuts):
+        print("Outs:",gameStatus.out, "Expected outs:", eOuts)
         raise AssertionError("Outs do not match")
-    elif (result.first != eFirst):
+    elif (gameStatus.first != eFirst):
+        print("Outs:",gameStatus.first, "Expected outs:", eFirst)
         raise AssertionError("First does not match")
-    elif (result.second != eSecond):
+    elif (gameStatus.second != eSecond):
+        print("Outs:",gameStatus.second, "Expected outs:", eSecond)
         raise AssertionError("second does not match")
-    elif (result.third != eThird):
+    elif (gameStatus.third != eThird):
+        print("Outs:",gameStatus.third, "Expected outs:", eThird)
         raise AssertionError("third does not match")
-    elif (result.scoreDiff != eScoreDiff):
+    elif (gameStatus.scoreDiff != eScoreDiff):
+        print("Outs:",gameStatus.scoreDiff, "Expected outs:", eScoreDiff)
         raise AssertionError("scoreDiff does not match")
     else:
         print("Test passed\n")
+    gameStatus.clear()
+
+
+print('tests strikeout')
+ex = 'play,1,0,schwk001,22,BCBFFFS,K'
+testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
 
 print('tests double play')
 ex = 'play,7,0,backw001,11,FBX,64(1)3/GDP/G6'
@@ -118,3 +128,6 @@ testCase(ex,eOuts=1,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
 print('tests Fielders choice with no outs')
 ex = 'play,5,1,jordr001,00,X,FC3/G3S.3-H;1-2'
 testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=1)
+
+
+
