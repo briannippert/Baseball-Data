@@ -18,4 +18,4 @@ function getStats() {
     });
 }
 
-getStats()
+getStats();
