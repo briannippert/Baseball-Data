@@ -5,7 +5,6 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'BaseBall-Data';
 
 games = [];
-module.exports.getStats = getStats;
 
 async function getStats(ball, strike, out, scoreDiff, first, second, third, inning) {
     MongoClient.connect(url, async function (err, db) {
@@ -41,11 +40,11 @@ async function getStats(ball, strike, out, scoreDiff, first, second, third, inni
                         }
                     ]
                 };
-                console.log(query)
-                dbo.collection("pitches").find(query).toArray(async function (err, result) {
+                //console.log(query)
+                dbo.collection("pitches").find(query).toArray(function (err, result) {
                     if (err) throw err;
                     filteredTotal = 0;
-                    
+
                     for (i in result) {
                         //   console.log(result[i])
                         if (result[i].winningTeam == true) {
@@ -62,31 +61,33 @@ async function getStats(ball, strike, out, scoreDiff, first, second, third, inni
                         games.push(gameId);
 
                     }
-                    console.log("Games :" + games.length);
-                    console.log("Games :" + filteredTotal);
+                    //console.log("Games :" + games.length);
+                    //console.log("Games :" + filteredTotal);
                     var decimal = (filteredTotal / games.length) * 100;
                     var percent = decimal.toFixed(2);
-                   
-                    console.log(percent + "%");
+                    //    console.log(percent + "%");
                     resolve(percent + "%");
                 });
-            })
+            });
         };
-        var result = await myPromise();
-        console.log("RESULT" + result);
-        db.close();
-        return result;
+        // var result = myPromise().then(ret_val => {
+        //     // console.log(ret_val);
+        //     return ret_val;
+        // });
+        output = await myPromise();
+        return output;
+
     });
 }
 
-
-// getStats(
-//     ball=0,
-//     strike=0,
-//     out=0,
-//     scoreDiff=0,
-//     first=false,
-//     second=false,
-//     third=false,
-//     inning='01'
-// );
+module.exports.getStats = getStats;
+var output = getStats(
+    ball = 0,
+    strike = 0,
+    out = 0,
+    scoreDiff = 0,
+    first = false,
+    second = false,
+    third = false,
+    inning = '01'
+);

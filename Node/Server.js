@@ -10,16 +10,26 @@ app.get('/Calculate', function (req, res) {
   var inning = query.topBottom + "" + query.inning;
   if (query.first == null) {
     query.first = false;
+  } else {
+    query.first = true;
   }
   if (query.second == null) {
     query.second = false;
+  } else {
+    query.second = true;
   }
   if (query.third == null) {
     query.third = false;
+  } else {
+    query.third = true;
   }
-  var nums =  dataAccess.getStats(query.balls, query.strikes, query.outs, query.scoreDiff, query.first, query.second, query.third, inning);
-  console.log(nums);
-  res.send(nums);
+
+  var result = dataAccess.getStats(query.balls, query.strikes, query.outs, query.scoreDiff, query.first, query.second, query.third, inning).then(function (value) {
+    console.log(value);
+    res.send(value);
+  });
+  // console.log(result);
+
 });
 
 app.use(express.static('public'));
