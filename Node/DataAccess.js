@@ -21,8 +21,6 @@ function getStats(ball,strike,out,scoreDiff,first,second,third,inning) {
         };
         dbo.collection("pitches").find(query).toArray(function(err, result) {
           if (err) throw err;
-        //   console.log(result)
-        //   console.log(result.length);
           filteredTotal = 0;
           for (i in result){
               if(result[i].winningTeam == true){
