@@ -1,11 +1,11 @@
 const express = require('express');
-const DataAccess = require('./DataAccess');
+const dataAccess = require('./DataAccess.js');
 const app = express();
 const port = 3000;
 
 app.get('/Calculate', function (req, res) {
-  DataAccess.getStats(1, 1, 1, 1, 1, 1, 1, 01);
-  res.send(`This Doesn't work Yet!`)
+  dataAccess.getStats(1,1,1,1,1,1,1,"01");
+  res.send(`This Doesn't work Yet!`);
 });
 
 app.use(express.static('public'));
