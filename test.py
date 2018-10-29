@@ -24,9 +24,14 @@ def testCase(play, eOuts, eFirst, eSecond, eThird, eScoreDiff):
     else:
         print("Test passed\n")
 
-def testInning():
-    pass
-    
+def testInning(plays):
+    gameStatus.clear()
+    for atBat in plays.split():
+        detailedLine = atBat.strip().split(',')
+        pRes = parseAtBat(detailedLine[1:])
+        print(atBat)
+        print(gameStatus)
+
 print('tests strikeout')
 ex = 'play,1,0,schwk001,22,BCBFFFS,K'
 testCase(ex,eOuts=1,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
@@ -130,6 +135,28 @@ testCase(ex,eOuts=1,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
 print('tests Fielders choice with no outs')
 ex = 'play,5,1,jordr001,00,X,FC3/G3S.3-H;1-2'
 testCase(ex,eOuts=0,eFirst=True,eSecond=True,eThird=False,eScoreDiff=1)
+
+print('test inning')
+ex = '''play,6,1,bradj001,00,,NP
+play,6,1,bradj001,10,.BX,53/G
+play,6,1,leons001,12,BCSS,K
+play,6,1,marrd001,31,BBBCB,W
+play,6,1,bettm001,00,,NP
+play,6,1,bettm001,32,.BCBFFB>B,W.1-2
+play,6,1,pedrd001,01,CX,D9/L.2-H;1-H
+play,6,1,bogax001,12,BCFX,D8/L.2-H
+play,6,1,benia002,30,VVVV,IW
+play,6,1,ramih003,32,BSCBB>B,W.2-3;1-2
+play,6,1,morem001,01,CB,WP.3-H(NR);2-3;1-2
+play,6,1,morem001,22,CB.SFBS,K
+play,7,0,hoyij001,22,BCFBX,S7/L
+play,7,0,deshd002,12,CFBH,HP.1-2
+play,7,0,choos001,11,BFX,S7/L+.2-H;1-3
+play,7,0,andre001,21,B*BSX,46(1)3/GDP.3-H
+play,7,0,mazan001,12,CSBX,S9/L
+play,7,0,lucrj001,00,,NP
+play,7,0,lucrj001,11,BTX,D8/L/MREV.1XH(862)'''
+testInning(ex)
 
 
 
