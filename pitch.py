@@ -1,26 +1,16 @@
-import json
-
 class pitch:
-    def __init__(self,ball, strike, out, scoreDiff, outcome, first, second, third, JSON):
-        if JSON != None:
-            jData = json.load(JSON)
-            self.ball = jData["ball"]
-            self.strike = jData["strike"]
-            self.out = jData["out"]
-            self.scoreDiff = jData["scoreDiff"]
-            self.outcome = jData["outcome"]
-            self.first = jData["first"]
-            self.second = jData["second"]
-            self.third = jData["third"]
-        else:
-            self.ball = ball
-            self.strike = strike
-            self.out = out
-            self.scoreDiff = scoreDiff
-            self.outcome = outcome
-            self.first = first
-            self.second = second
-            self.third = third
+    def __init__(self, ball, strike, out, scoreDiff, outcome, first, second, third, inning, winningTeam=None, id=None):
+        self.ball = ball
+        self.strike = strike
+        self.out = out
+        self.scoreDiff = scoreDiff
+        self.outcome = outcome
+        self.first = first
+        self.second = second
+        self.third = third
+        self.inning = inning
+        self.winningTeam = winningTeam
+        self.id= id
     def toDict(self):
         data = {}
         data["ball"] = self.ball
@@ -31,7 +21,9 @@ class pitch:
         data["first"] = self.first
         data["second"] = self.second
         data["third"] = self.third
-        # json_data = json.dumps(data)
+        data["inning"] = self.inning
+        data["winningTeam"] = self.winningTeam
+        data["id"] = self.id
         return data
 
 
