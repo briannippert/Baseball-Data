@@ -7,7 +7,7 @@ const dbName = 'BaseBall-Data';
 games = [];
 
 async function getStats(ball, strike, out, scoreDiff, first, second, third, inning) {
-    MongoClient.connect(url, async function (err, db) {
+    MongoClient.connect(url, function (err, db) {
         if (err) throw err;
         var dbo = db.db("Baseball-Data");
 
