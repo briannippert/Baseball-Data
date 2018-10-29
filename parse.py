@@ -70,7 +70,7 @@ def parseFieldPlay(fieldPlay,isBottom):
                     gameStatus.scoreDiff -= 1  
     
     csPos = batterPlay.find('CS')
-    if(csPos != -1 and batterPlay[csPos + 5] != 'E'):
+    if(csPos != -1 and batterPlay.find('E') == -1):
         gameStatus.out+=1
         runner = batterPlay[csPos+2]
         if(runner == '2'):
@@ -116,7 +116,7 @@ def parseFieldPlay(fieldPlay,isBottom):
         elif(batterPlay[0]=='K'):
             gameStatus.out += 1 
                 
-    if(batterPlay[0].isdigit()):
+    if(batterPlay[0].isdigit() and batterPlay.find('E')!=1):
         if(batterPlay.find('(')!=-1):
             if(batterPlay.count('(')==2 and batterPlay.find('B')==-1):
                 gameStatus.out-=1
@@ -179,6 +179,7 @@ def parseAtBat(play):
     
     if(gameStatus.out > 3):
         print(",".join(play), "4 outs recorded")
+        print(gameStatus)
 
     return retPitches
 
@@ -199,11 +200,11 @@ def readFile(f):
         for line in fp:
             lineDetailed = line.strip().split(',')
             if(lineDetailed[0]=='id'):
+                gameStatus.clear()
                 if(gameId != None):
                     # games[gameId] = game
                     createGame(gameId,game)
                     game = []
-                    gameStatus.clear()
 
                 gameId = lineDetailed[1]
             if(lineDetailed[0]=='play' ):
@@ -229,7 +230,8 @@ def writeResults():
     
 
 if __name__ == "__main__":
-    readFile(getFilePath('2017BOS.EVA'))
-    # readFile(getFilePath('TESTBOS201707180.EVA'))
+    for file in os.listdir("./2017eve"):
+        if file.endswith(".EVA") or file.endswith(".EVN"):
+            readFile(getFilePath(file))
     print(len(pitches))
     writeResults()

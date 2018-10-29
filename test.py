@@ -159,7 +159,10 @@ testCase(ex,eOuts=2,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
 
 
 print('test inning')
-ex = '''play,6,1,benia002,12,*BSFX,72(3)5(2)/GDP'''
+ex = '''play,1,0,schwk001,21,BFBX,S9/L
+play,1,0,bryak001,22,CBBCS,K
+play,1,0,rizza001,11,BSX,S9/L.1-2
+play,1,0,zobrb001,12,*BSSX,46(1)3/GDP'''
 testInning(ex)
 
 
