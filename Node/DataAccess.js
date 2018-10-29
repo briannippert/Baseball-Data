@@ -23,6 +23,7 @@ function getStats(ball,strike,out,scoreDiff,first,second,third,inning) {
           if (err) throw err;
           filteredTotal = 0;
           for (i in result){
+              console.log(result[i])
               if(result[i].winningTeam == true){
                 filteredTotal++;
               }
