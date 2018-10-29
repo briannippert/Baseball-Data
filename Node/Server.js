@@ -17,9 +17,7 @@ app.get('/Calculate', function (req, res) {
   if (query.third == null) {
     query.third = false;
   }
-  // console.log(query);
-  // console.log(inning);
-  var nums = dataAccess.getStats(query.balls, query.strikes, query.outs, query.scoreDiff, query.first, query.second, query.third, inning);
+  var nums =  dataAccess.getStats(query.balls, query.strikes, query.outs, query.scoreDiff, query.first, query.second, query.third, inning);
   console.log(nums);
   res.send(nums);
 });
