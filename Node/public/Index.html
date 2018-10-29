@@ -24,7 +24,7 @@
                         <input id="bottom" class="form-check-input" type="radio" name="topBottom" value="1">Bottom<br>
                     </div>
                 </div>
-                <select class="form-control">
+                <select class="form-control" required>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -60,14 +60,14 @@
             </div>
             <div class="col-sm-2">
                 <label for="scoreDiff" class="col-sm-6 col-form-label">Score Difference</label>
-                <input type="text" class="form-control" id="scoreDiff">
+                <input type="number" class="form-control" id="scoreDiff" required>
             </div>
             <div class="col-sm-2">
                 <label for="strikes" class="col-sm-2 col-form-label">Strikes</label>
-                <input type="text" class="form-control" id="strikes">
+                <input type="number" class="form-control" id="strikes" min="0" max="2" required>
 
                 <label for="balls" class="col-sm-2 col-form-label">Balls</label>
-                <input type="text" class="form-control" id="balls">
+                <input type="number" class="form-control" id="balls" min="0" max="3" required>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Get Results</button>
@@ -78,6 +78,6 @@
     function getResults() {
 
     }
-</script>>
+</script>
 
 </html>
