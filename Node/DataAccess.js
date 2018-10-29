@@ -74,8 +74,7 @@ async function getStats(ball, strike, out, scoreDiff, first, second, third, inni
         //     // console.log(ret_val);
         //     return ret_val;
         // });
-        output = await myPromise();
-        return output;
+        return await myPromise();
 
     });
 }
