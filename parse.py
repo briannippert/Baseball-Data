@@ -232,9 +232,10 @@ def writeResults():
     
 
 if __name__ == "__main__":
-    for file in os.listdir("./2017eve"):
-        if file.endswith(".EVA") or file.endswith(".EVN"):
-            readFile(getFilePath(file))
+    for folder in os.listdir("./events"):
+        for file in os.listdir("./events/" + folder):
+            if file.endswith(".EVA") or file.endswith(".EVN"):
+                readFile(getFilePath(file))
     print(len(pitches))
     writeResults()
     mango.loadData()
