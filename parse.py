@@ -140,7 +140,8 @@ def parseFieldPlay(fieldPlay,isBottom):
             gameStatus.first = True
     
 def parseAtBat(play):
-    inning = play[1] + play[0] 
+    inning = play[0] if int(play[0]) < 10 else '9+'
+    inning = play[1] + inning
     isBottom = play[1] #top = 0, bottom = 1
     batter = play[2]
     pitchPlay = play[4]
