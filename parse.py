@@ -4,6 +4,7 @@ from pitch import pitch
 from atBat import atBat
 from game import game
 from status import status
+import mango
 import json
 
 strikePlays = ['C','K','L','M','O','Q','S','T']
@@ -170,6 +171,7 @@ def parseAtBat(play):
         elif(p in foulPlays):            
             if(gameStatus.strike<2):
                 gameStatus.strike+=1
+            
         elif(p not in activePlay): continue
         newPitch = pitch(prevStatus.ball, prevStatus.strike, prevStatus.out, prevStatus.scoreDiff, p, prevStatus.first, prevStatus.second, prevStatus.third, inning)
         
@@ -235,3 +237,4 @@ if __name__ == "__main__":
             readFile(getFilePath(file))
     print(len(pitches))
     writeResults()
+    mango.loadData()

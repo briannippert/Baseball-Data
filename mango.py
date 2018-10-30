@@ -1,16 +1,16 @@
-import pymongo
+import pymongo, json
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+def loadData():
+  client = pymongo.MongoClient("mongodb://localhost:27017/")
 
-mydb = myclient["Baseball-Data"]
-myCol = mydb["pitches"]
+  db = client["Baseball-Data"]
+  db.drop_collection("pitches")
+  pitchCol = db["pitches"]
 
-myquery = {'$and': 
-            [{"inning":"116"},
-            {'scoreDiff':0}]
-}  
+  with open("results.json") as f:
+    data = json.load(f)
+  pitchCol.insert(data)
+  client.close()
 
-mydoc = myCol.find(myquery)
-for x in mydoc:
-  print(x)
-print(mydoc.count())
+if __name__ == '__main__':
+  loadData()
