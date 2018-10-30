@@ -83,7 +83,6 @@ async function getStats(ball, strike, out, scoreDiff, first, second, third, inni
                 callPromise().then(function(result) {
                         return result;
                     }
-                    // return await myPromise();
                 });
         }
 
