@@ -28,6 +28,10 @@ app.get('/Calculate', function (req, res) {
   } else {
     query.third = true;
   }
+  if(inning = "9+")
+  {
+    
+  }
   MongoClient.connect(Mongourl, function (err, db) {
     if (err) throw err;
     var dbo = db.db("Baseball-Data");
