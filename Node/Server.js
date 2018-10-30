@@ -78,7 +78,8 @@ app.get('/Calculate', function (req, res) {
         res.send("No Data");
       }else
       {
-        var result = ((filteredTotal / games.length) * 100).toFixed(2) + "%"
+        var result = ((filteredTotal / games.length) * 100).toFixed(2) + "%";
+        result += "  (" + filteredTotal + "/" + games.length + ") Games";
         res.send(result);
       }
       
