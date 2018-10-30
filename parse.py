@@ -217,8 +217,8 @@ def readFile(f):
         #add final game to list
         createGame(gameId,game)
 
-def getFilePath(file):
-    filePath = os.path.join('.',"2017eve",file)
+def getFilePath(folder,file):
+    filePath = os.path.join('.',folder,file)
     return filePath
 
 def writeResults():
@@ -235,7 +235,7 @@ if __name__ == "__main__":
     for folder in os.listdir("./events"):
         for file in os.listdir("./events/" + folder):
             if file.endswith(".EVA") or file.endswith(".EVN"):
-                readFile(getFilePath(file))
+                readFile(getFilePath(folder,file))
     print(len(pitches))
     writeResults()
     mango.loadData()
