@@ -28,10 +28,6 @@ app.get('/Calculate', function (req, res) {
   } else {
     query.third = true;
   }
-  if(inning = "9+")
-  {
-    
-  }
   MongoClient.connect(Mongourl, function (err, db) {
     if (err) throw err;
     var dbo = db.db("Baseball-Data");
@@ -72,10 +68,8 @@ app.get('/Calculate', function (req, res) {
           filteredTotal++;
         }
         let gameId = result[i]["id"];
-        if (gameId in games) {
-          console.log(result[i]["id"]);
-        }
         games.push(gameId);
+        
       }
       console.log(games.length);
       console.log(filteredTotal);

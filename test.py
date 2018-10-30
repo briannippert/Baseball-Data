@@ -10,16 +10,16 @@ def testCase(play, eOuts, eFirst, eSecond, eThird, eScoreDiff):
         print("Outs:",gameStatus.out, "Expected outs:", eOuts)
         raise AssertionError("Outs do not match")
     elif (gameStatus.first != eFirst):
-        print("Outs:",gameStatus.first, "Expected outs:", eFirst)
+        print("first:",gameStatus.first, "Expected first:", eFirst)
         raise AssertionError("First does not match")
     elif (gameStatus.second != eSecond):
-        print("Outs:",gameStatus.second, "Expected outs:", eSecond)
+        print("second:",gameStatus.second, "Expected second:", eSecond)
         raise AssertionError("second does not match")
     elif (gameStatus.third != eThird):
-        print("Outs:",gameStatus.third, "Expected outs:", eThird)
+        print("third:",gameStatus.third, "Expected third:", eThird)
         raise AssertionError("third does not match")
     elif (gameStatus.scoreDiff != eScoreDiff):
-        print("Outs:",gameStatus.scoreDiff, "Expected outs:", eScoreDiff)
+        print("scoreDiff:",gameStatus.scoreDiff, "Expected scoreDiff:", eScoreDiff)
         raise AssertionError("scoreDiff does not match")
     else:
         print("Test passed\n")
@@ -159,14 +159,28 @@ print('tests double play where batter is not mentioned')
 ex = 'play,6,1,benia002,12,*BSFX,72(3)5(2)/GDP'
 testCase(ex,eOuts=2,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
 
+print('tests throwing error causing batter to first')
+ex = 'play,1,0,gardb001,01,CX,4E1/G'
+testCase(ex,eOuts=0,eFirst=True,eSecond=False,eThird=False,eScoreDiff=0)
+
+
 
 print('test inning')
-ex = '''play,1,0,fraza001,22,FBFBX,7/F
-play,1,0,marts002,12,CTBX,43/G
-play,1,0,mccua001,01,FX,8/F
-play,1,1,pedrd001,00,X,63/G+
-play,1,1,benia002,32,BCFBBFT,K
-play,1,1,bettm001,10,BX,7/L'''
+ex = '''play,1,0,rizza001,12,SBF,NP
+com,"replay,1,rizza001,CHN,kellj901,PIT08,F,Y,U,,H"
+com,"ej,maddj801,M,kellj901,Replay ruling"
+com,"$Anthony Rizzo's fly down the RF line was ruled fair"
+com,"and a home run; the umpires huddled then crew chief"
+com,"Jeff Kellogg requested a review; the call was"
+com,"overturned to a foul ball; Cubs Manager Joe Maddon"
+com,"ejected by Kellogg for arguing the replay ruling"
+play,1,0,rizza001,32,SBFBFBB,W/UREV
+play,1,0,happi001,12,F1BSX,S7/G.1-2
+play,1,0,schwk001,22,CFBBX,75(2)/FO/F.1-2
+play,1,0,russa002,01,CX,54(1)/FO/G.2-3
+play,1,0,heywj001,31,BFBBB,W.1-2
+play,1,0,contw001,02,SFB,WP.3-H(NR);2-3;1-2
+play,1,0,contw001,12,SFB.X,D8/F.3-H;2-H;BX3(865)'''
 testInning(ex)
 
 

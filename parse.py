@@ -117,26 +117,29 @@ def parseFieldPlay(fieldPlay,isBottom):
         elif(batterPlay[0]=='K'):
             gameStatus.out += 1 
                 
-    if(batterPlay[0].isdigit() and batterPlay.find('E')!=1):
-        if(batterPlay.find('(')!=-1):
-            if(batterPlay.count('(')==2 and batterPlay.find('B')==-1):
-                gameStatus.out-=1
-            while(batterPlay.find('(')!=-1):
-                parenPos = batterPlay.find('(')
-                runnerOut = batterPlay[parenPos+1]
-                if(runnerOut == '1'):
-                    gameStatus.first=False
-                elif(runnerOut=='2'):
-                    gameStatus.second=False
-                elif(runnerOut=='3'):
-                    gameStatus.third=False 
-                elif(runnerOut=='B'):
+    if(batterPlay[0].isdigit()):
+        if(batterPlay.find('E')!=1):
+            if(batterPlay.find('(')!=-1):
+                if(batterPlay.count('(')==2 and batterPlay.find('B')==-1):
                     gameStatus.out-=1
-                batterPlay=batterPlay[parenPos+3:]
-                gameStatus.out+=1
-        gameStatus.out+=1
-        if(ignoreBatter or fieldPlay.find('FO')!= -1):
-            gameStatus.out-=1
+                while(batterPlay.find('(')!=-1):
+                    parenPos = batterPlay.find('(')
+                    runnerOut = batterPlay[parenPos+1]
+                    if(runnerOut == '1'):
+                        gameStatus.first=False
+                    elif(runnerOut=='2'):
+                        gameStatus.second=False
+                    elif(runnerOut=='3'):
+                        gameStatus.third=False 
+                    elif(runnerOut=='B'):
+                        gameStatus.out-=1
+                    batterPlay=batterPlay[parenPos+3:]
+                    gameStatus.out+=1
+            gameStatus.out+=1
+            if(ignoreBatter or fieldPlay.find('FO')!= -1):
+                gameStatus.out-=1
+                gameStatus.first = True
+        elif(not ignoreBatter):
             gameStatus.first = True
     
 def parseAtBat(play):
@@ -180,10 +183,6 @@ def parseAtBat(play):
 
     parseFieldPlay(fieldPlay,isBottom)
     
-    if(gameStatus.out > 3):
-        print(",".join(play), "4 outs recorded")
-        print(gameStatus)
-
     return retPitches
 
 def createGame(gameId,game): 
