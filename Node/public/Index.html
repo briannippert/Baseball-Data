@@ -92,7 +92,7 @@
     <button type="button" onclick="getResults()" class="btn btn-primary">Get Results</button>
     <br>
     <div>
-        <p>Home Team Winning Probability: </p><p id="percent"></p>
+        <h2 id="percent">Home Team Winning Probability: </h2>
     </div>
 </body>
 <script>
@@ -109,7 +109,7 @@
             if (xhttp.readyState === 4) {
                 console.log(xhttp.response);
                 var percent = document.getElementById("percent")
-                percent.innerHTML = xhttp.response;
+                percent.innerHTML  = "Home Team Winning Probability: " + xhttp.response;
             }
         }
         xhttp.open("GET", "/Calculate?" + queryString, false);
