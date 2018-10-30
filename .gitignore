@@ -1,3 +1,4 @@
 .vscode/settings.json
 .\results.json
 results.json
+*.json
