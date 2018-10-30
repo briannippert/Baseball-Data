@@ -28,7 +28,7 @@ app.get('/Calculate', function (req, res) {
   } else {
     query.third = true;
   }
-  if(inning = "9+")
+  if(inning == "9+")
   {
 
   }
