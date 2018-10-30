@@ -13,6 +13,9 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
         crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/js/umd/button.js"></script>
+    <style>
+    </style>
 </head>
 
 <body>
@@ -61,7 +64,7 @@
                 </div>
             </div>
             <div class="col-sm-2">
-                <label for="scoreDiff" defaultValue=0  class="col-sm-6 col-form-label">Score Difference</label>
+                <label for="scoreDiff" defaultValue=0 class="col-sm-6 col-form-label">Score Difference</label>
                 <input type="number" name="scoreDiff" class="form-control" id="scoreDiff" value="0" required>
             </div>
             <div class="col-sm-2">
@@ -87,17 +90,23 @@
             </div>
         </div>
         </div>
-       
+
     </form>
     <div>
         <h2 id="percent">Home Team Winning Probability: </h2>
     </div>
     <br>
-    <button type="button" onclick="getResults()" class="btn btn-primary">Get Results</button>
-   
-   
+    <button type="button" class="btn btn-primary btn-lg " id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Calculating"
+        onclick="getResults()">Get Results</button>
+
+
 </body>
 <script>
+    $('#load').on('click', function () {
+        var btn = $(this);
+        btn.button('loading');
+    });
+
     function getResults() {
         var form = document.querySelector('form');
         var formData = new FormData(form);
@@ -110,15 +119,13 @@
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState === 4) {
                 var percent = document.getElementById("percent")
-                if(xhttp.response == "No Data")
-                {
-                    percent.innerHTML  =  xhttp.response;
-                }else
-                {
-                    percent.innerHTML  = "Home Team Winning Probability: " + xhttp.response;
+                if (xhttp.response == "No Data") {
+                    percent.innerHTML = xhttp.response;
+                } else {
+                    percent.innerHTML = "Home Team Winning Probability: " + xhttp.response;
                 }
-                
-                
+                $('#load').button('reset');
+
             }
         }
         xhttp.open("GET", "/Calculate?" + queryString, false);
