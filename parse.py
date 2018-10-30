@@ -218,7 +218,7 @@ def readFile(f):
         createGame(gameId,game)
 
 def getFilePath(folder,file):
-    filePath = os.path.join('.',folder,file)
+    filePath = os.path.join('.',"events",folder,file)
     return filePath
 
 def writeResults():
