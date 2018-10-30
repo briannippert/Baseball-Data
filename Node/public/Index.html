@@ -109,9 +109,16 @@
 
         xhttp.onreadystatechange = function () {
             if (xhttp.readyState === 4) {
-                console.log(xhttp.response);
                 var percent = document.getElementById("percent")
-                percent.innerHTML  = "Home Team Winning Probability: " + xhttp.response;
+                if(xhttp.response == "No Data")
+                {
+                    percent.innerHTML  =  xhttp.response;
+                }else
+                {
+                    percent.innerHTML  = "Home Team Winning Probability: " + xhttp.response;
+                }
+                
+                
             }
         }
         xhttp.open("GET", "/Calculate?" + queryString, false);

@@ -28,6 +28,7 @@ app.get('/Calculate', function (req, res) {
   } else {
     query.third = true;
   }
+
   MongoClient.connect(Mongourl, function (err, db) {
     if (err) throw err;
     var dbo = db.db("Baseball-Data");
@@ -63,7 +64,6 @@ app.get('/Calculate', function (req, res) {
       if (err) throw err;
       filteredTotal = 0;
       for (i in result) {
-        //   console.log(result[i])
         if (result[i].winningTeam == true) {
           filteredTotal++;
         }
@@ -73,8 +73,15 @@ app.get('/Calculate', function (req, res) {
       }
       console.log(games.length);
       console.log(filteredTotal);
-      var result = ((filteredTotal / games.length) * 100).toFixed(2) + "%"
-      res.send(result);
+      if(games.length == 0)
+      {
+        res.send("No Data");
+      }else
+      {
+        var result = ((filteredTotal / games.length) * 100).toFixed(2) + "%"
+        res.send(result);
+      }
+      
       games = [];
       db.close();
     });
