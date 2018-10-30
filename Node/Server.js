@@ -71,10 +71,6 @@ MongoClient.connect(Mongourl, function (err, db) {
       if (gameId in games) {
         console.log(result[i]["id"]);
       }
-      if (!gameId.endsWith("0")) {
-        console.log(gameId);
-        console.log(result[i]);
-      }
       games.push(gameId);
     }
     console.log(games.length);
