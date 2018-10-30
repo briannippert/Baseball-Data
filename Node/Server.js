@@ -77,7 +77,7 @@ app.get('/Calculate', function (req, res) {
       console.log(filteredTotal);
       var result = ((filteredTotal / games.length) * 100).toFixed(2) + "%"
       res.send(result);
-      games = null;
+      games = [];
       db.close();
     });
   });
