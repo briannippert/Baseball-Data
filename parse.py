@@ -1,8 +1,6 @@
 pitches = []
 import os
 from pitch import pitch
-from atBat import atBat
-from game import game
 from status import status
 import mango
 import json
