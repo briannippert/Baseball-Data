@@ -183,7 +183,10 @@ def parseAtBat(play):
     
     return retPitches
 
-def createGame(gameId,game): 
+def createGame(gameId,game):
+    # if(len(game)==0):
+    #     print("empty game",gameId)
+    #     return 
     lastBat = game[-1]
     finalScore = lastBat.scoreDiff
     winner = finalScore >= 0
