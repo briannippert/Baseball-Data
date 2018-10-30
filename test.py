@@ -32,6 +32,8 @@ def testInning(plays):
         pRes = parseAtBat(detailedLine[1:])
         print(atBat)
         print(gameStatus)
+        for p in pRes:
+            print(p.toDict())
 
 print('tests strikeout')
 ex = 'play,1,0,schwk001,22,BCBFFFS,K'
@@ -159,10 +161,12 @@ testCase(ex,eOuts=2,eFirst=False,eSecond=False,eThird=False,eScoreDiff=0)
 
 
 print('test inning')
-ex = '''play,1,0,schwk001,21,BFBX,S9/L
-play,1,0,bryak001,22,CBBCS,K
-play,1,0,rizza001,11,BSX,S9/L.1-2
-play,1,0,zobrb001,12,*BSSX,46(1)3/GDP'''
+ex = '''play,1,0,fraza001,22,FBFBX,7/F
+play,1,0,marts002,12,CTBX,43/G
+play,1,0,mccua001,01,FX,8/F
+play,1,1,pedrd001,00,X,63/G+
+play,1,1,benia002,32,BCFBBFT,K
+play,1,1,bettm001,10,BX,7/L'''
 testInning(ex)
 
 
