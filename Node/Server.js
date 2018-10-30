@@ -30,7 +30,7 @@ app.get('/Calculate', function (req, res) {
   }
   if(inning = "9+")
   {
-    
+
   }
   MongoClient.connect(Mongourl, function (err, db) {
     if (err) throw err;
@@ -79,8 +79,15 @@ app.get('/Calculate', function (req, res) {
       }
       console.log(games.length);
       console.log(filteredTotal);
-      var result = ((filteredTotal / games.length) * 100).toFixed(2) + "%"
-      res.send(result);
+      if(games.length == 0)
+      {
+        res.send("No Data");
+      }else
+      {
+        var result = ((filteredTotal / games.length) * 100).toFixed(2) + "%"
+        res.send(result);
+      }
+      
       games = [];
       db.close();
     });
