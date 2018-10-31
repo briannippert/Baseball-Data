@@ -197,9 +197,9 @@ def createGame(gameId,game):
     for pitch in game:
         pitch.winningTeam = winner
         try:
-            pitchDict[pitch.inning][pitch.scoreDiff][pitch.out][pitch.ball][int(pitch.first)][int(pitch.second)][int(pitch.third)][int(winner)] += 1
+            pitchDict[pitch.inning][pitch.scoreDiff][pitch.out][pitch.ball][pitch.strike][int(pitch.first)][int(pitch.second)][int(pitch.third)][int(winner)] += 1
         except: 
-            pitchDict[pitch.inning][pitch.scoreDiff][pitch.out][pitch.ball][int(pitch.first)][int(pitch.second)][int(pitch.third)][int(winner)] = 1
+            pitchDict[pitch.inning][pitch.scoreDiff][pitch.out][pitch.ball][pitch.strike][int(pitch.first)][int(pitch.second)][int(pitch.third)][int(winner)] = 1
         
 
 def readFile(f):
