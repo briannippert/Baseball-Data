@@ -4,10 +4,6 @@ from pitch import pitch
 from status import status
 import mango
 import json
-from collections import defaultdict
-
-dynamicNest = lambda: defaultdict(lambda: defaultdict(dynamicNest))
-pitchDict = dynamicNest()
 
 strikePlays = ['C','K','L','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
@@ -194,13 +190,10 @@ def createGame(gameId,game):
     lastBat = game[-1]
     finalScore = lastBat.scoreDiff
     winner = finalScore >= 0
-    for pitch in game:
+    for index,pitch in enumerate(game):
         pitch.winningTeam = winner
-        try:
-            pitchDict[pitch.inning][pitch.scoreDiff][pitch.out][pitch.ball][pitch.first][pitch.second][pitch.third][winner] += 1
-        except: 
-            pitchDict[pitch.inning][pitch.scoreDiff][pitch.out][pitch.ball][pitch.first][pitch.second][pitch.third][winner] = 1
-        
+        pitch.id = gameId + str(index)
+        pitches.append(pitch)
 
 def readFile(f):
     with open(f) as fp:
@@ -230,7 +223,11 @@ def getFilePath(folder,file):
     return filePath
 
 def writeResults():
-    jsonOut = json.dumps(pitchDict)
+    output = []
+    count = 0
+    for p in pitches:
+        output.append(p.toDict())
+    jsonOut = json.dumps(output)
     with(open('results.json','w')) as wf:
         wf.write(jsonOut)
     
