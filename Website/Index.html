@@ -116,6 +116,7 @@
     function getResults() {
         var tb = document.querySelector('input[name="topBottom"]:checked').value;
         var inning = document.getElementById("inning").value
+        var totalInning = tb + "" + inning;
         var outs = document.querySelector('input[name="outs"]:checked').value;
         //var outs = document.getElementById("outs").checked
         var first = document.getElementById("first").checked ? 1 : 0
@@ -125,15 +126,8 @@
         var strikes = document.querySelector('input[name="strikes"]:checked').value;
         var balls = document.querySelector('input[name="balls"]:checked').value;
 
-        console.log(tb);
-        console.log(inning);
-        console.log(outs);
-        console.log(first);
-        console.log(second);
-        console.log(third);
-        console.log(scoreDiff);
-        console.log(strikes);
-        console.log(balls);
+        console.log(JSON[totalInning][scoreDiff][outs][balls][strikes][first][second][third]["0"])
+        console.log(JSON[totalInning][scoreDiff][outs][balls][strikes][first][second][third]["1"])
     }
 </script>
 
