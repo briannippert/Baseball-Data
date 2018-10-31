@@ -58,9 +58,9 @@
                 <legend class="col-form-label col-sm-2 pt-0">Runners</legend>
                 <div class="col-sm-10">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="first" value="true">1<br>
-                        <input class="form-check-input" type="checkbox" name="second" value="true">2<br>
-                        <input class="form-check-input" type="checkbox" name="third" value="true">3<br>
+                        <input class="form-check-input" type="checkbox" id="first" name="first" value="true">1<br>
+                        <input class="form-check-input" type="checkbox" id="second" name="second" value="true">2<br>
+                        <input class="form-check-input" type="checkbox" id="third" name="third" value="true">3<br>
                     </div>
                 </div>
             </div>
@@ -114,11 +114,26 @@
     });
 
     function getResults() {
-        var form = document.querySelector('form');
-        var formData = new FormData(form);
-        for (var [key, value] of formData.entries()) {
-            console.log(key, value);
-        }
+        var tb = document.querySelector('input[name="topBottom"]:checked').value;
+        var inning = document.getElementById("inning").value
+        var outs = document.querySelector('input[name="outs"]:checked').value;
+        //var outs = document.getElementById("outs").checked
+        var first = document.getElementById("first").checked ? 1 : 0
+        var second = document.getElementById("second").checked ? 1 : 0
+        var third = document.getElementById("third").checked ? 1 : 0
+        var scoreDiff = document.getElementById("scoreDiff").checked ? 1 : 0
+        var strikes = document.querySelector('input[name="strikes"]:checked').value;
+        var balls = document.querySelector('input[name="balls"]:checked').value;
+
+        console.log(tb);
+        console.log(inning);
+        console.log(outs);
+        console.log(first);
+        console.log(second);
+        console.log(third);
+        console.log(scoreDiff);
+        console.log(strikes);
+        console.log(balls);
     }
 </script>
 
