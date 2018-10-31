@@ -196,18 +196,11 @@ def createGame(gameId,game):
     winner = finalScore >= 0
     for pitch in game:
         pitch.winningTeam = winner
-        count = str(pitch.strike) + str(pitch.ball)
-        bases = getBases(pitch.first,pitch.second,pitch.third)
         try:
-            pitchDict[pitch.inning][pitch.out][count][bases][winner] += 1
+            pitchDict[pitch.inning][pitch.scoreDiff][pitch.out][pitch.ball][pitch.first][pitch.second][pitch.third][winner] += 1
         except: 
-            pitchDict[pitch.inning][pitch.out][count][bases][winner] = 1
+            pitchDict[pitch.inning][pitch.scoreDiff][pitch.out][pitch.ball][pitch.first][pitch.second][pitch.third][winner] = 1
         
-def getBases(first,second,third):
-    first = 'T' if first else 'F'
-    second = 'T' if second else 'F'
-    third = 'T' if third else 'F'
-    return first + second + third
 
 def readFile(f):
     with open(f) as fp:
@@ -247,6 +240,5 @@ if __name__ == "__main__":
         for file in os.listdir("./events/" + folder):
             if file.endswith(".EVA") or file.endswith(".EVN"):
                 readFile(getFilePath(folder,file))
-    print(len(pitches))
     writeResults()
-    mango.loadData()
+    # mango.loadData()
