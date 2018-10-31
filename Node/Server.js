@@ -1,11 +1,7 @@
 const express = require('express');
 const app = express();
+var fs = require('fs');
 const port = 3000;
-const dbName = 'BaseBall-Data';
-games = [];
-const MongoClient = require('mongodb').MongoClient;
-const test = require('assert');
-const Mongourl = 'mongodb://localhost:27017';
 
 
 app.get('/Calculate', function (req, res) {
@@ -28,7 +24,14 @@ app.get('/Calculate', function (req, res) {
   } else {
     query.third = true;
   }
-  
+  try {
+    var obj = JSON.parse(fs.readFileSync('./Node/public/results.json', 'utf8'));
+    console.log(obj["01"]["-1"]["2"]["0"]["0"]["0"]["0"]["0"]);
+    console.log(obj["01"]["-1"]["2"]["0"]["0"]["0"]["0"]["1"]);
+  } catch (e) {
+    console.log(e);
+  }
+
 });
 
 app.use(express.static('public'));
