@@ -11,7 +11,7 @@ def loadData():
     data = json.load(f)
   pitchCol.insert(data)
   client.close()
-  os.remove("results.json")
+  # os.remove("results.json")
 
 if __name__ == '__main__':
   loadData()
