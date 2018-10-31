@@ -28,65 +28,7 @@ app.get('/Calculate', function (req, res) {
   } else {
     query.third = true;
   }
-
-  MongoClient.connect(Mongourl, function (err, db) {
-    if (err) throw err;
-    var dbo = db.db("Baseball-Data");
-    var query2 = {
-      '$and': [{
-          'ball': parseInt(query.balls)
-        },
-        {
-          'strike': parseInt(query.strikes)
-        },
-        {
-          'out': parseInt(query.outs)
-        },
-        {
-          'scoreDiff': parseInt(query.scoreDiff)
-        },
-        {
-          'first': query.first
-        },
-        {
-          'second': query.second
-        },
-        {
-          'third': query.third
-        },
-        {
-          'inning': inning
-        }
-      ]
-    };
-    console.log(query)
-    dbo.collection("pitches").find(query2).toArray(function (err, result) {
-      if (err) throw err;
-      filteredTotal = 0;
-      for (i in result) {
-        if (result[i].winningTeam == true) {
-          filteredTotal++;
-        }
-        let gameId = result[i]["id"];
-        games.push(gameId);
-        
-      }
-      console.log(games.length);
-      console.log(filteredTotal);
-      if(games.length == 0)
-      {
-        res.send("No Data");
-      }else
-      {
-        var result = ((filteredTotal / games.length) * 100).toFixed(2) + "%";
-        result += "  (" + filteredTotal + "/" + games.length + ") Games";
-        res.send(result);
-      }
-      
-      games = [];
-      db.close();
-    });
-  });
+  
 });
 
 app.use(express.static('public'));
