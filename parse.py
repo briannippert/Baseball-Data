@@ -2,7 +2,6 @@ pitches = []
 import os
 from pitch import pitch
 from status import status
-import mango
 import json
 from collections import defaultdict
 
@@ -188,9 +187,9 @@ def parseAtBat(play):
     return retPitches
 
 def createGame(gameId,game):
-    # if(len(game)==0):
-    #     print("empty game",gameId)
-    #     return 
+    if(len(game)==0):
+        print("empty game",gameId)
+        return 
     lastBat = game[-1]
     finalScore = lastBat.scoreDiff
     winner = finalScore >= 0
@@ -241,4 +240,3 @@ if __name__ == "__main__":
             if file.endswith(".EVA") or file.endswith(".EVN"):
                 readFile(getFilePath(folder,file))
     writeResults()
-    # mango.loadData()
