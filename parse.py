@@ -231,7 +231,7 @@ def getFilePath(folder,file):
 
 def writeResults():
     jsonOut = json.dumps(pitchDict)
-    with(open('results.json','w')) as wf:
+    with(open('./Node/public/results.json','w')) as wf:
         wf.write(jsonOut)
     
 
