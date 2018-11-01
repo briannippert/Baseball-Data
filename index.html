@@ -173,6 +173,13 @@
         try {
             var lost = JSON[totalInning][scoreDiff][outs][balls][strikes][first][second][third]["0"];
             var won = JSON[totalInning][scoreDiff][outs][balls][strikes][first][second][third]["1"];
+            console.log(won,lost)
+            if(!won){
+                won = 0;
+            }
+            if(!lost){
+                lost = 0;
+            }
             var percent = ((won / (lost + won) * 100).toFixed(2) + "%") + " (" + won + "/" + (lost + won) +")";
             var output = document.getElementById("percent");
             if (!percent.includes("NaN%")) {
