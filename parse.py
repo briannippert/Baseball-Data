@@ -230,7 +230,7 @@ def getFilePath(folder,file):
 
 def writeResults():
     jsonOut = json.dumps(pitchDict)
-    with(open('./Website/results.json','w')) as wf:
+    with(open('results.json','w')) as wf:
         wf.write(jsonOut)
     
 
