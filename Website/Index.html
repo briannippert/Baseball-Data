@@ -80,10 +80,16 @@
             <div class="col-sm-2">
                 <legend class="col-form-label col-sm-2 pt-0">Strikes</legend>
                 <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" checked required name="strikes" value="0">0<br>
-                        <input class="form-check-input" type="radio" name="strikes" value="1">1<br>
-                        <input class="form-check-input" type="radio" name="strikes" value="2">2<br>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="strikes" value="0" autocomplete="off" checked> 0
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="strikes" value="1" autocomplete="off"> 1
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="strikes" value="2" autocomplete="off"> 2
+                        </label>
                     </div>
                 </div>
             </div>
