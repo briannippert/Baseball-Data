@@ -34,9 +34,13 @@
             <div class="col-sm-2">
                 <legend class="col-form-label col-sm-2 pt-0">Inning</legend>
                 <div class="col-sm-10">
-                    <div class="form-check">
-                        <input type="radio" id=top class="form-check-input" required name="topBottom" checked value="0">Top<br>
-                        <input id="bottom" class="form-check-input" type="radio" name="topBottom" value="1">Bottom<br>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="topBottom" value="0" autocomplete="off" checked> Top
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="topBottom" value="1" autocomplete="off"> Bottom
+                        </label>
                     </div>
                 </div>
                 <select id="inning" name="inning" class="form-control" required>
@@ -56,10 +60,16 @@
             <div class="col-sm-2">
                 <legend class="col-form-label col-sm-2 pt-0">Outs</legend>
                 <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" required checked name="outs" value="0">0<br>
-                        <input class="form-check-input" type="radio" name="outs" value="1">1<br>
-                        <input class="form-check-input" type="radio" name="outs" value="2">2<br>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="outs" value="0" autocomplete="off" checked> 0
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="outs" value="1" autocomplete="off"> 1
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="outs" value="2" autocomplete="off"> 2
+                        </label>
                     </div>
                 </div>
             </div>
@@ -96,11 +106,19 @@
             <div class="col-sm-2">
                 <legend class="col-form-label col-sm-2 pt-0">Balls</legend>
                 <div class="col-sm-10">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" checked required name="balls" value="0">0<br>
-                        <input class="form-check-input" type="radio" name="balls" value="1">1<br>
-                        <input class="form-check-input" type="radio" name="balls" value="2">2<br>
-                        <input class="form-check-input" type="radio" name="balls" value="3">3<br>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary active">
+                            <input type="radio" name="balls" value="0" autocomplete="off" checked> 0
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="balls" value="1" autocomplete="off"> 1
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="balls" value="2" autocomplete="off"> 2
+                        </label>
+                        <label class="btn btn-secondary">
+                            <input type="radio" name="balls" value="3" autocomplete="off"> 3
+                        </label>
                     </div>
                 </div>
             </div>
