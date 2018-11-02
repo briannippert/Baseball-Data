@@ -77,9 +77,13 @@
             </div>
         </div>
         <div class="form-group row">
-            <div class="col-sm-6">
-                <label for="scoreDiff" defaultValue=0 class="col-sm-6 col-form-label">Home Team Lead/Deficit (+/-)</label>
-                <input name="scoreDiff" class="form-control" id="scoreDiff" value="0" required>
+            <div class="col-sm-2">
+                <legend class="col-form-label col-sm-6">Home Team Lead/Deficit (+/-)</legend>
+                <div class="btn-group btn-group-lg btn-group-toggle">
+                    <button type="button" class="btn btn-secondary" onclick="incScore()">H +</button>
+                    <button type="button" class="btn btn-secondary" onclick="decScore()">V +</button>
+                </div>
+                <div id="scoreStatus">Tied</div>
             </div>
         </div>
         <div class="form-group row">
@@ -150,6 +154,20 @@
     </div>
 </body>
 <script>
+    let gameScoreDiff = 0;
+
+    function incScore(){
+        gameScoreDiff ++;
+        updateScoreDiff()
+    }
+    function decScore(){
+        gameScoreDiff --;
+        updateScoreDiff()
+    }
+    function updateScoreDiff(){
+        const scoreStatus = document.getElementById('scoreStatus');
+        scoreStatus.innerHTML = gameScoreDiff != 0 ? gameScoreDiff : 'Tied';
+    }
     fetch('results.json')
         .then(response => response.json())
         .then(json => JSON = json)
@@ -169,7 +187,7 @@
         var first = document.getElementById("first").checked ? 1 : 0
         var second = document.getElementById("second").checked ? 1 : 0
         var third = document.getElementById("third").checked ? 1 : 0
-        var scoreDiff = document.getElementById("scoreDiff").value
+        var scoreDiff = gameScoreDiff
         var strikes = document.querySelector('input[name="strikes"]:checked').value;
         var balls = document.querySelector('input[name="balls"]:checked').value;
 
