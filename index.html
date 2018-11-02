@@ -191,9 +191,14 @@
         var strikes = document.querySelector('input[name="strikes"]:checked').value;
         var balls = document.querySelector('input[name="balls"]:checked').value;
 
+        var results = JSON[totalInning][scoreDiff][outs][balls][strikes][first][second][third];
+        update(results['0'],results['1'])
+        
+    }
+
+    function update(lost,won){
         try {
-            var lost = JSON[totalInning][scoreDiff][outs][balls][strikes][first][second][third]["0"];
-            var won = JSON[totalInning][scoreDiff][outs][balls][strikes][first][second][third]["1"];
+            
             if(!won){
                 won = 0;
             }
@@ -211,7 +216,6 @@
             var output = document.getElementById("percent");
             output.innerHTML = "No Data";
         }
-
     }
 </script>
 
