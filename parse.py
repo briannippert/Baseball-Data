@@ -7,7 +7,7 @@ from collections import defaultdict
 
 dynamicNest = lambda: defaultdict(lambda: defaultdict(dynamicNest))
 pitchDict = dynamicNest()
-
+pitchCount = 0
 strikePlays = ['C','K','L','M','O','Q','S','T']
 ballPlays = ['B','I','P','V']
 activePlay = ['H','X','Y']
@@ -187,13 +187,15 @@ def parseAtBat(play):
     return retPitches
 
 def createGame(gameId,game):
+    global pitchCount
     if(len(game)==0):
-        print("empty game",gameId)
+        # print("empty game",gameId)
         return 
     lastBat = game[-1]
     finalScore = lastBat.scoreDiff
     winner = finalScore >= 0
     for pitch in game:
+        pitchCount += 1
         pitch.winningTeam = winner
         try:
             pitchDict[pitch.inning][pitch.scoreDiff][pitch.out][pitch.ball][pitch.strike][int(pitch.first)][int(pitch.second)][int(pitch.third)][int(winner)] += 1
@@ -240,3 +242,4 @@ if __name__ == "__main__":
             if file.endswith(".EVA") or file.endswith(".EVN"):
                 readFile(getFilePath(folder,file))
     writeResults()
+    print(pitchCount)
