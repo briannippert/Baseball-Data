@@ -14,6 +14,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.2/js/umd/button.js"></script>
+    <script src="js/possOutcomes.js"></script>
 
     
     <style>
@@ -140,10 +141,12 @@
     </form>
     <div>
         <h2 id="percent">Home Team Winning Probability: </h2>
+        <!--<h3 id="outcomes">Possible Outcomes: </h3>
+        <ul id="outcomeList"></ul>-->
     </div>
     <br>
     <button type="button" class="btn btn-primary btn-lg " id="load" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Calculating"
-        onclick="getResults()">Get Results</button>
+        onclick="update()">Get Results</button>
     <div id="footer">
         <hr>
         <p>Data taken from 1980-2017 seasons. Some game data is missing due to missing pitch data</p>
@@ -178,25 +181,13 @@
         btn.button('loading');
     });
 
-    function getResults() {
-        var tb = document.querySelector('input[name="topBottom"]:checked').value;
-        var inning = document.getElementById("inning").value
-        var totalInning = tb + "" + inning;
-        var outs = document.querySelector('input[name="outs"]:checked').value;
-        //var outs = document.getElementById("outs").checked
-        var first = document.getElementById("first").checked ? 1 : 0
-        var second = document.getElementById("second").checked ? 1 : 0
-        var third = document.getElementById("third").checked ? 1 : 0
-        var scoreDiff = gameScoreDiff
-        var strikes = document.querySelector('input[name="strikes"]:checked').value;
-        var balls = document.querySelector('input[name="balls"]:checked').value;
 
-        var results = JSON[totalInning][scoreDiff][outs][balls][strikes][first][second][third];
-        update(results['0'],results['1'])
-        
-    }
-
-    function update(lost,won){
+    function update(){
+        const inputDict = getInputs();
+        const results = getResults(inputDict,{});
+        //seePossOutcomes(inputDict);
+        const lost = results['0'];
+        const won = results['1'];
         try {
             
             if(!won){
