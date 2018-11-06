@@ -186,17 +186,9 @@
         const inputDict = getInputs();
         const results = getResults(inputDict,{});
         //seePossOutcomes(inputDict);
-        const lost = results['0'];
-        const won = results['1'];
         try {
-            
-            if(!won){
-                won = 0;
-            }
-            if(!lost){
-                lost = 0;
-            }
-            var percent = ((won / (lost + won) * 100).toFixed(2) + "%") + " (" + won + "/" + (lost + won) +")";
+            const probs = getProbability(results);
+            var percent = probs.probability + " (" + probs.won + "/" + (probs.total) +")";
             var output = document.getElementById("percent");
             if (!percent.includes("NaN%")) {
                 output.innerHTML = "Home Team Winning Probability: " + percent;

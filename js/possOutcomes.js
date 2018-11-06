@@ -38,7 +38,15 @@ function getResults(inputDict,changes) {
     const inpFirst = givenOrDefault(changes,inputDict,'first');
     const inpSecond = givenOrDefault(changes,inputDict,'second');
     const inpThird = givenOrDefault(changes,inputDict,'third');
-    return JSON[inpInning][inpScoreDiff][inpOuts][inpBalls][inpStrikes][inpFirst][inpSecond][inpThird];
+    try{
+        return JSON[inpInning][inpScoreDiff][inpOuts][inpBalls][inpStrikes][inpFirst][inpSecond][inpThird];
+    }
+    catch(e){
+        return{
+            '0':0,
+            '1':0
+        }
+    }
 }
 
 function appendToOutcomeList(item){
@@ -74,7 +82,19 @@ function seePossOutcomes(inputDict){
 }
 
 function getProbability(outcome){
-    return (outcome['1'] / (outcome['0'] + outcome['1']) * 100).toFixed(2) + "%";
+    let won = outcome['1'];
+    let lost = outcome['0'];
+    if(!won){
+        won = 0;
+    }
+    if(!lost){
+        lost = 0;
+    }
+    return {
+        probability:(won / (lost + won) * 100).toFixed(2) + "%",
+        won:won,
+        total:(lost + won)
+    };
 }
 
 //outcome functions
